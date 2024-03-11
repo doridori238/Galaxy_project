@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 using static UnityEditor.Progress;
 
 public class Parser 
-{
+{   // 리스트 데이터 타입은 생각해서 작성해보자 음... 타입만 변동 되면 되니까 저기에 뭐 넣지 일단 함수이고..으 
     public static List<Item> Parse(string path)
     {
         List<Item> valuesList = new List<Item>();
@@ -19,6 +19,7 @@ public class Parser
         for (int i = 1; i < lines.Length - 1; i++)
         {            
             string[] values = lines[i].Split(",");  
+            
             //if(들어오는 정보로 스위치문으로 해서 담든가 아니면 if문으로 잡아서 처리하면 될것이다.)
             items = Input(values);       
             valuesList.Add(items);
@@ -55,7 +56,7 @@ public class Parser
 public class DataLoad : Singleton<DataLoad>
 {
     string path = "ITEM_INFO";
-    Dictionary<int, Item> itemDic = new Dictionary<int, Item>();
+    public Dictionary<int, Item> itemDic = new Dictionary<int, Item>();
     Item item1;
     void Start()
     {   
@@ -72,7 +73,6 @@ public class DataLoad : Singleton<DataLoad>
     }
 
 }
-
 
 
 public struct Item
