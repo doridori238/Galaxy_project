@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemData : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
-    DataLoad dataLoad;
+    // Start is called before the first frame update
     void Start()
     {
-         int itemtype  = dataLoad.itemDic[0].itemtype;
-
+        
     }
 
     // Update is called once per frame

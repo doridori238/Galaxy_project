@@ -56,8 +56,13 @@ public class Parser
 public class DataLoad : Singleton<DataLoad>
 {
     string path = "ITEM_INFO";
-    public Dictionary<int, Item> itemDic = new Dictionary<int, Item>();
+    
     Item item1;
+    ITEMDETAIL detail;
+    
+    public Dictionary<int, Item> itemDic = new Dictionary<int, Item>(); 
+    
+
     void Start()
     {   
         List<Item> valuesList  =  Parser.Parse(path);
@@ -65,12 +70,29 @@ public class DataLoad : Singleton<DataLoad>
         for (int i = 0; i < valuesList.Count; i++)
             itemDic.Add(valuesList[i].itemindex, valuesList[i]);
 
-        item1 = itemDic[1];
-        Debug.Log(item1.itemname);
-
+        
         //딕션어리 통한 키 벨류로 만들기
 
     }
+
+    //public void ItemDetail()
+    //{
+    //    //if ((int)ITEMDETAIL.HP_POTION == itemDic[1].detail)
+    //    Item hpPotion;
+        
+    //    for (int i = 0; i < itemDic.Count; i++)
+    //    {
+    //        if (itemDic[i].detail == (int)ITEMDETAIL.HP_POTION)
+    //            hpPotion = itemDic[i];
+
+    //        //if ((int)ITEMDETAIL.MP_POTION == itemDic[i].detail) 
+
+
+    //        //if ((int)ITEMDETAIL.WEAPON == itemDic[i].detail) 
+    //    }
+    //}
+
+
 
 }
 
@@ -95,19 +117,9 @@ public struct Item
 ///// <summary>
 ///// 매개체
 ///// </summary>
-//enum ItemDetail
-//{ 
-//    ITEM_INDEX = 1,
-//    ITEM_NAME = 2,
-//    ITEM_TYPE = 3,
-//    DETAIL = 4,
-//    LVLIMIT = 5,
-//    OPTION1 = 6, 
-//    VALUE1 = 7,
-//    OPTION2 = 8,
-//    VALUE2 = 9,
-//    OPTION3 = 10,
-//    VALUE3 = 11,
-//    OPTION4 = 12,
-//    VALUE4 = 13,
+//public enum ITEMDETAIL
+//{
+//    WEAPON = 0,
+//    HP_POTION = 5,
+//    MP_POTION = 6
 //}
