@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Unity.VisualScripting;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEditor.Progress;
 
-public class Parser 
-{   // 리스트 데이터 타입은 생각해서 작성해보자 음... 타입만 변동 되면 되니까 저기에 뭐 넣지 일단 함수이고..으 
+
+public static class Parser 
+{  
+
     public static List<Item> Parse(string path)
     {
         List<Item> valuesList = new List<Item>();
@@ -35,9 +38,9 @@ public class Parser
         
         item.itemindex = int.Parse(values[0]);
         item.itemname = values[1];
-        item.itemtype = int.Parse(values[2]);
-        item.detail = int.Parse(values[3]);
-        item.lvlimit = int.Parse(values[4]);
+        item.itemtype = (ITEMTYPE)int.Parse(values[2]);
+        item.detail = (ITEMDETAIL)int.Parse(values[3]);
+        item.lvlimit = (LV_LIMIT)int.Parse(values[4]);
         item.option1 = int.Parse(values[5]);
         item.value1 = int.Parse(values[6]);
         item.option2 = int.Parse(values[7]);
@@ -57,53 +60,32 @@ public class DataLoad : Singleton<DataLoad>
 {
     string path = "ITEM_INFO";
     
-    Item item1;
-    ITEMDETAIL detail;
-    
-    public Dictionary<int, Item> itemDic = new Dictionary<int, Item>(); 
-    
+   
+    public Dictionary<int, Item> itemDic = new Dictionary<int, Item>();
+    public  List<Item> valuesList;
 
-    void Start()
-    {   
-        List<Item> valuesList  =  Parser.Parse(path);
+    public override void Awake()
+    {
+        base.Awake();
+        valuesList = Parser.Parse(path);
 
-        for (int i = 0; i < valuesList.Count; i++)
+
+        for (int i = 1; i < valuesList.Count; i++)
             itemDic.Add(valuesList[i].itemindex, valuesList[i]);
-
+        
         
         //딕션어리 통한 키 벨류로 만들기
-
     }
 
-    //public void ItemDetail()
-    //{
-    //    //if ((int)ITEMDETAIL.HP_POTION == itemDic[1].detail)
-    //    Item hpPotion;
-        
-    //    for (int i = 0; i < itemDic.Count; i++)
-    //    {
-    //        if (itemDic[i].detail == (int)ITEMDETAIL.HP_POTION)
-    //            hpPotion = itemDic[i];
-
-    //        //if ((int)ITEMDETAIL.MP_POTION == itemDic[i].detail) 
-
-
-    //        //if ((int)ITEMDETAIL.WEAPON == itemDic[i].detail) 
-    //    }
-    //}
-
-
-
 }
-
 
 public struct Item
 {
     public int itemindex;
     public string itemname;
-    public int itemtype;
-    public int detail;
-    public int lvlimit;
+    public ITEMTYPE itemtype;
+    public ITEMDETAIL detail;
+    public LV_LIMIT lvlimit;
     public int option1;
     public int value1;
     public int option2;
@@ -112,14 +94,25 @@ public struct Item
     public int value3;
     public int option4;
     public int value4;
+
 }
 
-///// <summary>
-///// 매개체
-///// </summary>
-//public enum ITEMDETAIL
-//{
-//    WEAPON = 0,
-//    HP_POTION = 5,
-//    MP_POTION = 6
-//}
+public enum ITEMTYPE
+{
+    CONSUMPTION = 1, // 소모형 아이템
+    MOUNTING = 0     // 장착형 아이템 
+}
+
+public enum ITEMDETAIL
+{
+    WEAPON = 0,
+    HP_POTION = 5,
+    MP_POTION = 6
+}
+
+public enum LV_LIMIT
+{
+    ONE_LV = 1,
+    FIVE_LV = 5,
+    TEN_LV = 10,
+}
