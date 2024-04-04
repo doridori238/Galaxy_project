@@ -7332,16 +7332,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuButton: {fileID: 1065701001}
+  allbuttonImage: {fileID: 767174715}
   gameSceneAllButton:
   - {fileID: 547863743}
   - {fileID: 638338976}
   - {fileID: 75521016}
   - {fileID: 1870404973}
   gameconnectedButton:
-  - {fileID: 1627952442}
-  - {fileID: 640945199}
-  - {fileID: 992144916}
-  - {fileID: 2082750232}
+  - {fileID: 1627952441}
+  - {fileID: 640945198}
+  - {fileID: 992144915}
+  - {fileID: 2082750231}
 --- !u!4 &1443644679
 Transform:
   m_ObjectHideFlags: 0
@@ -8156,7 +8157,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1627952442
 RectTransform:
   m_ObjectHideFlags: 0
