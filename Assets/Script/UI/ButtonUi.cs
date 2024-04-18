@@ -30,9 +30,9 @@ public class ButtonUi : MonoBehaviour
     void Start()
     {
         menuButton.onClick.AddListener(()=> { MenuOnClick(menuButton, allbuttonImage); }); // 선언을 통해 역어주고 event이기에 따로 업데이트 구문에서 진행하지 않아도 된다.
-    
-           
-    
+        gameSceneAllButton[0].onClick.AddListener(() => { MenuOnClick(gameSceneAllButton[0], gameconnectedButton[0]);});
+
+
         // 내가 원하는 것은 원하는 List위치에 버튼을 찾아서 클릭이 되는거 확인 후 이미지 on/off 연결
     }
 
@@ -40,16 +40,16 @@ public class ButtonUi : MonoBehaviour
     // 버튼을 누르면 [메서드 : 버튼은 비활성화 되고] -> 버튼과 연결된 Ui가 활성화 되도록 하는 메서드 구현  
     // 키와 값으로 이루어져있는 Dic을 이용하는게 좀 더 효율적일 수 있따
 
-    public void MenuOnClick(Button menuButton, GameObject allbuttonImage)
+    public void MenuOnClick(Button Button, GameObject allbuttonImage)
     {
-        //foreach (var button in gameSceneAllButton)
-        //{
-        //    button.enabled = !Change;
-        //}
-        allbuttonImage.SetActive(!Change);
-
-        Debug.Log("버튼 누름");
+        Change = !Change;
+        allbuttonImage.SetActive(Change);
+        //Debug.Log("버튼 누름");
     }
+
+
+
+
 
 
 
