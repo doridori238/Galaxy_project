@@ -17,7 +17,7 @@ public class InventorySlot : MonoBehaviour
         InvenSlot(slot);
     }
 
-
+    // 데이터가 들어있지 않은 slot은 SetActive(false)가 되도록 만들어주고 만약 데이터가 배열 크기보다 많다면 추가하던가 아님 아이템을 버리거나 할 수 있도록 만들어 주자
     //뜨앗 데이터 들어있는 여부 체크 하고 들어가면 List에 들어가도록 하고 아이템을 사용하면 remove로 빼주고 지금 상태는 배경 슬롯을 그냥 리스트에 담고 있는 쓸대 없는 상황
     public List<GameObject> InvenSlot(GameObject[] slot) // 더해주는 것과 빼주는 것 두개다 만들기
     {

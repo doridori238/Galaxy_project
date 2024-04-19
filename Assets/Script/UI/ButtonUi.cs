@@ -16,48 +16,56 @@ public class ButtonUi : MonoBehaviour
     [SerializeField] private List<Button> gameSceneAllButton = new List<Button>();
     [SerializeField] private List<GameObject> gameconnectedButton = new List<GameObject>();
 
-    
-    private bool change = false;
-    public bool Change
+
+    private bool buttonOnOff = false;
+    public bool ButtonOnOff
     {
-        get { return change; }
-        set {
-                change = value;
+        get { return buttonOnOff; }
+        set
+        {
+            buttonOnOff = value;
         }
     }
 
+    private bool button0 = false;
 
     void Start()
     {
-        menuButton.onClick.AddListener(()=> { MenuOnClick(menuButton, allbuttonImage); }); // 선언을 통해 역어주고 event이기에 따로 업데이트 구문에서 진행하지 않아도 된다.
-        gameSceneAllButton[0].onClick.AddListener(() => { MenuOnClick(gameSceneAllButton[0], gameconnectedButton[0]);});
-
-
-        // 내가 원하는 것은 원하는 List위치에 버튼을 찾아서 클릭이 되는거 확인 후 이미지 on/off 연결
+        MenuButton();
+      
     }
 
+    /// <summary>
+    /// Menu버튼, state버튼,skill버튼,inven버튼,option버튼이 연결되어있는 함수이다.
+    /// </summary>
+    public void MenuButton()
+    { 
+        menuButton.onClick.AddListener(() => { MenuOnClick(menuButton, allbuttonImage, gameconnectedButton); }); // 선언을 통해 역어주고 event이기에 따로 업데이트 구문에서 진행하지 않아도 된다.
+        gameSceneAllButton[0].onClick.AddListener(() => { UiOff(gameconnectedButton); gameconnectedButton[0].SetActive(true);});
+        gameSceneAllButton[1].onClick.AddListener(() => { UiOff(gameconnectedButton); gameconnectedButton[1].SetActive(true); });
+        gameSceneAllButton[2].onClick.AddListener(() => { UiOff(gameconnectedButton); gameconnectedButton[2].SetActive(true); });
+        gameSceneAllButton[3].onClick.AddListener(() => { UiOff(gameconnectedButton); gameconnectedButton[3].SetActive(true); });
+    }
 
     // 버튼을 누르면 [메서드 : 버튼은 비활성화 되고] -> 버튼과 연결된 Ui가 활성화 되도록 하는 메서드 구현  
     // 키와 값으로 이루어져있는 Dic을 이용하는게 좀 더 효율적일 수 있따
 
-    public void MenuOnClick(Button Button, GameObject allbuttonImage)
+    public void MenuOnClick(Button Button, GameObject allbuttonImage, List<GameObject> gameconnectedButton)
     {
-        Change = !Change;
-        allbuttonImage.SetActive(Change);
-        //Debug.Log("버튼 누름");
+        UiOff(gameconnectedButton);
+
+        ButtonOnOff = !ButtonOnOff;
+        allbuttonImage.SetActive(ButtonOnOff);
+    }
+
+    public void UiOff(List<GameObject> gameconnectedButton)
+    {
+        foreach (var button in gameconnectedButton)
+        {
+            button.SetActive(false);
+        }
     }
 
 
-
-
-
-
-
-    void Update()
-    {
-        
-
-    }
-       
 
 }
