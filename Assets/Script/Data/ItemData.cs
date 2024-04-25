@@ -9,50 +9,49 @@ using UnityEngine.UIElements.Experimental;
 
 public class ItemData : Singleton<ItemData>
 {
-    
-   // public List<Item> itemData = new List<Item>();
-    //public Item basicweaponData;
-    //public Item goodweaponData;
-    //public Item strongweaponData;
+    public List<Item> itemData = new List<Item>();
+    public Item basicweaponData;
+    public Item goodweaponData;
+    public Item strongweaponData;
 
-    //public Item basicMppotion;
-    //public Item goodMppotion;
-    //public Item strongMppotion;
+    public Item basicMppotion;
+    public Item goodMppotion;
+    public Item strongMppotion;
 
-    //public Item basicHppotion;
-    //public Item goodHppotion;
-    //public Item strongHppotion;
+    public Item basicHppotion;
+    public Item goodHppotion;
+    public Item strongHppotion;
 
-   
+
     void Start()
     {
 
-       // itemData = DataLoad.instance.valuesList;
+        itemData = DataLoad.instance.valuesList;
 
-        //for (int i = 0; i<itemData.Count;i++)
-        //{
-        //    // 公扁Item
-        //    if ((int)itemData[i].detail == 0 && (int)itemData[i].lvlimit == 1)
-        //        basicweaponData = itemData[i];
-        //    if ((int)itemData[i].detail == 0 && (int)itemData[i].lvlimit == 5)
-        //        goodweaponData = itemData[i];
-        //    if ((int)itemData[i].detail == 0 && (int)itemData[i].lvlimit == 10)
-        //        strongweaponData = itemData[i];
-        //    // Hp器记 
-        //    if ((int)itemData[i].detail == 5 && (int)itemData[i].lvlimit == 1)
-        //        basicHppotion = itemData[i];
-        //    if((int)itemData[i].detail == 5 && (int)itemData[i].lvlimit == 5)
-        //        goodHppotion = itemData[i];
-        //    if ((int)itemData[i].detail == 5 && (int)itemData[i].lvlimit == 10)
-        //        strongHppotion = itemData[i];
-        //    //Mp器记
-        //    if ((int)itemData[i].detail == 6 && (int)itemData[i].lvlimit == 1)
-        //        basicMppotion = itemData[i];
-        //    if ((int)itemData[i].detail == 6 && (int)itemData[i].lvlimit == 5)
-        //        goodMppotion = itemData[i];
-        //    if ((int)itemData[i].detail == 6 && (int)itemData[i].lvlimit == 10)
-        //        strongMppotion = itemData[i];
-        //}
+        for (int i = 0; i < itemData.Count; i++)
+        {
+            // 公扁item
+            if ((int)itemData[i].detail == 0 && (int)itemData[i].lvlimit == 1)
+                basicweaponData = itemData[i];
+            if ((int)itemData[i].detail == 0 && (int)itemData[i].lvlimit == 5)
+                goodweaponData = itemData[i];
+            if ((int)itemData[i].detail == 0 && (int)itemData[i].lvlimit == 10)
+                strongweaponData = itemData[i];
+            // hp器记 
+            if ((int)itemData[i].detail == 5 && (int)itemData[i].lvlimit == 1)
+                basicHppotion = itemData[i];
+            if ((int)itemData[i].detail == 5 && (int)itemData[i].lvlimit == 5)
+                goodHppotion = itemData[i];
+            if ((int)itemData[i].detail == 5 && (int)itemData[i].lvlimit == 10)
+                strongHppotion = itemData[i];
+            //mp器记
+            if ((int)itemData[i].detail == 6 && (int)itemData[i].lvlimit == 1)
+                basicMppotion = itemData[i];
+            if ((int)itemData[i].detail == 6 && (int)itemData[i].lvlimit == 5)
+                goodMppotion = itemData[i];
+            if ((int)itemData[i].detail == 6 && (int)itemData[i].lvlimit == 10)
+                strongMppotion = itemData[i];
+        }
 
     }
 

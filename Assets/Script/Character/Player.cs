@@ -1,14 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Build.Content;
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static InterfaceManager;
-using static UnityEngine.Rendering.VirtualTexturing.Debugging;
-
 public class Player : MonoBehaviour,ISendItemDataAble
 { 
     public FixedJoystick joystick = null;
