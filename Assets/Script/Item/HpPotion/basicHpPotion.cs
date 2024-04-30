@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Progress;
 
-public class BasicSword : Weapon
+public class basicHpPotion : HpPotion
 {
-    Item currentItem ;
+    Item currentItem;
     [SerializeField] int itemindex;
     [SerializeField] string itemname;
     [SerializeField] ITEMTYPE itemtype;
@@ -23,10 +22,10 @@ public class BasicSword : Weapon
 
     void Start()
     {
-        currentItem = ItemData.instance.basicweaponData;
+        currentItem = ItemData.instance.basicHppotion;
         ItemInData();
 
-        Debug.Log(itemname);
+       // Debug.Log(itemname);
     }
 
     public override void ItemInData()
@@ -46,38 +45,4 @@ public class BasicSword : Weapon
         value4 = currentItem.value4;
 
     }
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //public BasicSword(Item currentItem, int itemindex, string itemname, ITEMTYPE itemtype, ITEMDETAIL detail, LV_LIMIT lvlimit, int option1, int value1, int option2, int value2, int option3, int value3, int option4, int value4)
-    //{
-    //    itemindex = currentItem.itemindex;
-    //    itemname = currentItem.itemname;
-    //    itemtype = currentItem.itemtype;
-    //    detail = currentItem.detail;
-    //    lvlimit = currentItem.lvlimit;
-    //    option1 = currentItem.option1;
-    //    option2 = currentItem.option2;
-    //    option3 = currentItem.option3;
-    //    option4 = currentItem.option4;
-    //    value1 = currentItem.value1;
-    //    value2 = currentItem.value2;
-    //    value3 = currentItem.value3;
-    //    value4 = currentItem.value4;
-
-    //}
- 

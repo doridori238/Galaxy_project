@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ComponentPattrn : MonoBehaviour
+public class ComponentPattern : MonoBehaviour
 {
     public interface IComponentable
     {

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements.Experimental;
+
 
 
 
@@ -23,10 +23,15 @@ public class ItemData : Singleton<ItemData>
     public Item strongHppotion;
 
 
-    void Start()
-    {
 
+
+    private void OnEnable()
+    {
         itemData = DataLoad.instance.valuesList;
+        if (itemData == null)
+            return;
+
+
 
         for (int i = 0; i < itemData.Count; i++)
         {
@@ -52,6 +57,22 @@ public class ItemData : Singleton<ItemData>
             if ((int)itemData[i].detail == 6 && (int)itemData[i].lvlimit == 10)
                 strongMppotion = itemData[i];
         }
+
+
+
+    }
+
+
+
+
+    void Start()
+    {
+
+
+
+
+        Debug.Log(basicweaponData.itemname);
+
 
     }
 

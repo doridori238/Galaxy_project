@@ -1,7 +1,7 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static ComponentPattrn;
+using static ComponentPattern;
 
 public class Composite : MonoBehaviour, IComponentable
 {
