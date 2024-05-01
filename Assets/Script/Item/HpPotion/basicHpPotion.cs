@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static ComponentPattern;
 
-public class basicHpPotion : HpPotion
+public class basicHpPotion : HpPotion, IComponentable
 {
-    Item currentItem;
+    public Item currentItem;
     [SerializeField] int itemindex;
     [SerializeField] string itemname;
     [SerializeField] ITEMTYPE itemtype;
@@ -20,12 +21,18 @@ public class basicHpPotion : HpPotion
     [SerializeField] int value4;
 
 
-    void Start()
+   
+    private void Update()
     {
-        currentItem = ItemData.instance.basicHppotion;
-        ItemInData();
+        if (currentItem.itemname == null)
+        {
+            currentItem = ItemData.instance.basicweaponData;
+            ItemInData();
 
-       // Debug.Log(itemname);
+        }
+        else
+            return;
+
     }
 
     public override void ItemInData()
@@ -44,5 +51,10 @@ public class basicHpPotion : HpPotion
         value3 = currentItem.value3;
         value4 = currentItem.value4;
 
+    }
+
+    public void Operation()
+    {
+        throw new System.NotImplementedException();
     }
 }

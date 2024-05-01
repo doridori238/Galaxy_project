@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static ComponentPattern;
+using static InterfaceManager;
 using static UnityEditor.Progress;
 
-public class BasicSword : Weapon
+public class BasicSword : Weapon, IComponentable, ISendItemDataAble
 {
     Item currentItem ;
     [SerializeField] int itemindex;
@@ -21,13 +23,24 @@ public class BasicSword : Weapon
     [SerializeField] int value4;
 
 
-    void Start()
-    {
-        currentItem = ItemData.instance.basicweaponData;
-        ItemInData();
+    
 
-        Debug.Log(itemname);
+    private void Update()
+    {
+        if (currentItem.itemname == null)
+        {
+            currentItem = ItemData.instance.basicweaponData;
+            ItemInData();
+            
+        }
+        else
+            return; 
+
     }
+
+
+
+
 
     public override void ItemInData()
     {
@@ -47,6 +60,17 @@ public class BasicSword : Weapon
 
     }
 
+    public void Operation()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public Item OnSendItemDataAble(Item item)
+    {
+        item = currentItem;
+
+        return item;
+    }
 
 }
 

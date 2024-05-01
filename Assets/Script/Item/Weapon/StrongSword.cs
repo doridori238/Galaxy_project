@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
+using static ComponentPattern;
 
-public class StrongSword : Weapon
+public class StrongSword : Weapon, IComponentable
 {
 
     Item currentItem;
@@ -21,12 +23,17 @@ public class StrongSword : Weapon
     [SerializeField] int value4;
 
 
-
-    void Start()
+    private void Update()
     {
-        currentItem = ItemData.instance.strongweaponData;
-        ItemInData();
-        Debug.Log(itemname);
+        if (currentItem.itemname == null)
+        {
+            currentItem = ItemData.instance.basicweaponData;
+            ItemInData();
+
+        }
+        else
+            return;
+
     }
 
     public override void ItemInData()
@@ -45,5 +52,10 @@ public class StrongSword : Weapon
         value3 = currentItem.value3;
         value4 = currentItem.value4;
 
+    }
+
+    public void Operation()
+    {
+        throw new System.NotImplementedException();
     }
 }

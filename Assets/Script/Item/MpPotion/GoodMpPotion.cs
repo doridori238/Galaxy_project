@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static ComponentPattern;
 
-public class GoodMpPotion : MpPotion
+public class GoodMpPotion : MpPotion, IComponentable
 {
 
     Item currentItem;
@@ -21,10 +22,16 @@ public class GoodMpPotion : MpPotion
     [SerializeField] int value4;
 
 
-    void Start()
+    private void Update()
     {
-        currentItem = ItemData.instance.goodMppotion;
-        ItemInData();
+        if (currentItem.itemname == null)
+        {
+            currentItem = ItemData.instance.basicweaponData;
+            ItemInData();
+
+        }
+        else
+            return;
 
     }
 
@@ -44,5 +51,10 @@ public class GoodMpPotion : MpPotion
         value3 = currentItem.value3;
         value4 = currentItem.value4;
 
+    }
+
+    public void Operation()
+    {
+        throw new System.NotImplementedException();
     }
 }

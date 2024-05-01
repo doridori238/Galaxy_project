@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static ComponentPattern;
 
-public class GoodHpPotion : HpPotion
+public class GoodHpPotion : HpPotion, IComponentable
 {
     Item currentItem;
     [SerializeField] int itemindex;
@@ -19,13 +20,17 @@ public class GoodHpPotion : HpPotion
     [SerializeField] int option4;
     [SerializeField] int value4;
 
-
-    void Start()
+    private void Update()
     {
-        currentItem = ItemData.instance.goodHppotion;
-        ItemInData();
+        if (currentItem.itemname == null)
+        {
+            currentItem = ItemData.instance.basicweaponData;
+            ItemInData();
 
-        //Debug.Log(itemname);
+        }
+        else
+            return;
+
     }
 
     public override void ItemInData()
@@ -44,5 +49,10 @@ public class GoodHpPotion : HpPotion
         value3 = currentItem.value3;
         value4 = currentItem.value4;
 
+    }
+
+    public void Operation()
+    {
+        throw new System.NotImplementedException();
     }
 }

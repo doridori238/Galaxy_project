@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static ComponentPattern;
+using static InterfaceManager;
 
 public class InventorySlot : MonoBehaviour, IComponentable
 {
     //리스트에 담아서 쓰기
-    private List<IComponentable> itemLeaf = new List<IComponentable>();
+    [SerializeField]private List<IComponentable> itemLeaf = new List<IComponentable>();
 
     // 아이템 타입으로 분류된 아이템을 인벤토리 와 연결
     //  itemData에 분류된 데이터를 가지고 와서 사용하는 곳! Ui랑 도 연동 되는 곳
@@ -16,25 +17,29 @@ public class InventorySlot : MonoBehaviour, IComponentable
 
     public void Start()
     {
-       // InvenSlot(slot);
+        InvenSlot(slot);
     }
+ 
 
     /// <summary>
     /// componentpattern.add part
     /// </summary>
     /// <param name="leaf"></param>
-    public void Add(IComponentable leaf) 
+    public void Add(IComponentable item)//(IComponentable item, GameObject[] slot)
     {
-        itemLeaf.Add(leaf);
+        itemLeaf.Add(item);
+
+        Debug.Log(item);
+
     }
 
     /// <summary>
     /// componentpattern.remove part
     /// </summary>
     /// <param name="leaf"></param>
-    public void Remove(IComponentable leaf)
+    public void Remove(IComponentable item)//(IComponentable item, GameObject[] slot)
     {
-        itemLeaf.Remove(leaf);
+        itemLeaf.Remove(item);
     }
 
     /// <summary>
@@ -44,9 +49,9 @@ public class InventorySlot : MonoBehaviour, IComponentable
     {
         //childLeaf.GetRange(0, childLeaf.Count);  
         // 들어오는 아이템들을 찾고 확인 작업 이 부분은 트리로 만들어도 나쁘지 않을 듯 한데 일단 만들고 생각
-        foreach (IComponentable leaf in itemLeaf)
+        foreach (IComponentable item in itemLeaf)
         {
-            Debug.Log(leaf);
+            Debug.Log(item);
         }
 
     }
@@ -64,22 +69,22 @@ public class InventorySlot : MonoBehaviour, IComponentable
 
     // 데이터가 들어있지 않은 slot은 SetActive(false)가 되도록 만들어주고 만약 데이터가 배열 크기보다 많다면 추가하던가 아님 아이템을 버리거나 할 수 있도록 만들어 주자
     //뜨앗 데이터 들어있는 여부 체크 하고 들어가면 List에 들어가도록 하고 아이템을 사용하면 remove로 빼주고 지금 상태는 배경 슬롯을 그냥 리스트에 담고 있는 쓸대 없는 상황
-    //public List<GameObject> InvenSlot(GameObject[] slot) // 더해주는 것과 빼주는 것 두개다 만들기
-    //{
-    //    List<GameObject> list = new List<GameObject>();
+    //ui이랑 연결되는 인벤
+    public List<GameObject> InvenSlot(GameObject[] slot) // 더해주는 것과 빼주는 것 두개다 만들기
+    {
+        List<GameObject> list = new List<GameObject>();
 
-    //    for (int i = 0; i < slot.Length; i++)
-    //    { 
-    //        if(slot == null)
-    //            list.Add(slot[i]);
-    //        else 
-    //            return list;
-    //    }
-       
-    //    return list;
-    
-    //}
+        for (int i = 0; i < slot.Length; i++)
+        {
+            if (slot == null)
+                list.Add(slot[i]);
+            else
+                return list;
+        }
 
+        return list;
 
+    }
 
+   
 }
