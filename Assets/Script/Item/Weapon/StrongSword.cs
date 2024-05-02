@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 using static ComponentPattern;
+using static InterfaceManager;
 
-public class StrongSword : Weapon, IComponentable
+public class StrongSword : Weapon, IComponentable, ISendItemDataAble
 {
 
     Item currentItem;
@@ -57,5 +58,12 @@ public class StrongSword : Weapon, IComponentable
     public void Operation()
     {
         throw new System.NotImplementedException();
+    }
+
+    public Item OnSendItemDataAble(Item item)
+    {
+        item = currentItem;
+
+        return item;
     }
 }

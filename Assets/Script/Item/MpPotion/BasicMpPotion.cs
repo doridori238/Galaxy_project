@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static ComponentPattern;
+using static InterfaceManager;
 
-public class BasicMpPotion : MpPotion, IComponentable
+public class BasicMpPotion : MpPotion, IComponentable, ISendItemDataAble
 {
 
     Item currentItem;
@@ -56,5 +57,12 @@ public class BasicMpPotion : MpPotion, IComponentable
     public void Operation()
     {
         throw new System.NotImplementedException();
+    }
+
+    public Item OnSendItemDataAble(Item item)
+    {
+        item = currentItem;
+
+        return item;
     }
 }

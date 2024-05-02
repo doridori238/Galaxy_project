@@ -29,7 +29,7 @@ public class Player : MonoBehaviour, ISendItemDataAble, IGetItemDataAble
     public float Hp
     {
         get { return hp; }
-        set { hp = maxhp; }
+        set { maxhp = hp; }
     }
 
     float mp;
@@ -38,7 +38,7 @@ public class Player : MonoBehaviour, ISendItemDataAble, IGetItemDataAble
     public float MaxMp
     {
         get { return mp; }
-        set { mp = maxMp; }
+        set { maxMp = mp; }
     }
 
     /// <summary>
@@ -84,25 +84,25 @@ public class Player : MonoBehaviour, ISendItemDataAble, IGetItemDataAble
         else if (playerRd.velocity.y > maxspeed * 3)
             playerRd.velocity = new Vector2(playerRd.velocity.x, maxspeed * 2);
 
-
+    
     }
 
 
 
     InventorySlot compositeinvenslot = new InventorySlot();
 
-   
+    
 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Sprite itemImage = collision.gameObject.GetComponent<SpriteRenderer>().sprite;
+
         ISendItemDataAble currentitem = collision.gameObject.GetComponent<ISendItemDataAble>();
         GetItemDataAble(currentitem);
 
         IComponentable currentitemCompo = collision.gameObject.GetComponent<IComponentable>();
-        compositeinvenslot.Add(currentitemCompo);
-
-        compositeinvenslot.GetChild();
+        compositeinvenslot.Add(currentitemCompo, itemImage);
 
     }
 
@@ -117,6 +117,7 @@ public class Player : MonoBehaviour, ISendItemDataAble, IGetItemDataAble
     {
         Debug.Log(OnSendItemData);
     }
+     
 }
 
 

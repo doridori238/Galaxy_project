@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static ComponentPattern;
+using static InterfaceManager;
 
-public class GoodSword : Weapon, IComponentable
+public class GoodSword : Weapon, IComponentable, ISendItemDataAble
 {
     Item currentItem;
     [SerializeField] int itemindex;
@@ -56,5 +57,12 @@ public class GoodSword : Weapon, IComponentable
     public void Operation()
     {
         throw new System.NotImplementedException();
+    }
+
+    public Item OnSendItemDataAble(Item item)
+    {
+        item = currentItem;
+
+        return item;
     }
 }

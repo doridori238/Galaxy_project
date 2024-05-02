@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static ComponentPattern;
+using static InterfaceManager;
 
-public class StrongHppotion : HpPotion, IComponentable
+public class StrongHppotion : HpPotion, IComponentable, ISendItemDataAble
 {
     Item currentItem;
     [SerializeField] int itemindex;
@@ -55,5 +56,12 @@ public class StrongHppotion : HpPotion, IComponentable
     public void Operation()
     {
         throw new System.NotImplementedException();
+    }
+
+    public Item OnSendItemDataAble(Item item)
+    {
+        item = currentItem;
+
+        return item;
     }
 }
