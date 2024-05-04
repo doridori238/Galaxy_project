@@ -105,7 +105,7 @@ public class Player : MonoBehaviour, ISendItemDataAble, IGetItemDataAble
         compositeinvenslot.Add(currentitemCompo, itemImage);
 
     }
-
+     
 
     public Item OnSendItemDataAble(Item item)
     {

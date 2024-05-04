@@ -1,44 +1,48 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using static ComponentPattern;
 using static InterfaceManager;
 
 public class InventorySlot : MonoBehaviour, IComponentable
 {
     //리스트에 담아서 쓰기
-    [SerializeField]private List<IComponentable> itemLeaf = new List<IComponentable>();
-    Dictionary<List<IComponentable>, List<Sprite>> invenUi = new Dictionary<List<IComponentable>, List<Sprite>>();
-    [SerializeField] List<Sprite> itemSprite = new List<Sprite>();
+    [SerializeField] private List<IComponentable> itemLeaf = new List<IComponentable>();
+    Dictionary<List<Sprite>, List<IComponentable>> invenUi = new Dictionary<List<Sprite>, List<IComponentable>>();
+   // [SerializeField] List<Sprite> itemSprite = new List<Sprite>();
     [SerializeField] GameObject[] slot = new GameObject[20];
     [SerializeField] GameObject detailDataUi;
+    [SerializeField] Sprite itemdetailImage;
+
 
     // 아이템 타입으로 분류된 아이템을 인벤토리 와 연결
     //  itemData에 분류된 데이터를 가지고 와서 사용하는 곳! Ui랑 도 연동 되는 곳
     // 인벤토리는 bool 여부로 비어 있는지 판단 후 들어갈 수 있도록
-    bool check = false;
+    bool check = true;
 
     public void Start()
     {
         //InvenSlot(slot);
-        detailDataUi.GetComponentInChildren<Renderer>();
+
 
     }
 
 
     private void Update()
     {
-        
+
     }
 
     /// <summary>
     /// componentpattern.add part
     /// </summary>
     /// <param name="leaf"></param>
-    public void Add(IComponentable item , Sprite sprite )//(IComponentable item, GameObject[] slot)
+    public void Add(IComponentable item, Sprite sprite)//(IComponentable item, GameObject[] slot)
     {
         itemLeaf.Add(item);
-        itemSprite.Add(sprite);
+        //itemSprite.Add(sprite);
+        //invenUi.Add(itemLeaf[item], itemSprite[sprite]);
         Debug.Log(item);
 
     }
@@ -76,6 +80,32 @@ public class InventorySlot : MonoBehaviour, IComponentable
         throw new System.NotImplementedException();
     }
 
+    public void Slots(GameObject[] slot)
+    {
+       for(int i = 0; i < 20; i++)
+        {
+            if (slot[i].GetComponent<Image>().sprite == null)
+            {
+                
+            }
+
+        }
+
+
+
+           // if (slot[0].GetComponent<Image>().sprite == null)
+         
+   
+    
+    
+    }
+
+
+
+
+
+   
+}
 
 
     // 데이터가 들어있지 않은 slot은 SetActive(false)가 되도록 만들어주고 만약 데이터가 배열 크기보다 많다면 추가하던가 아님 아이템을 버리거나 할 수 있도록 만들어 주자
@@ -96,6 +126,3 @@ public class InventorySlot : MonoBehaviour, IComponentable
     //    return list;
 
     //}
-
-   
-}

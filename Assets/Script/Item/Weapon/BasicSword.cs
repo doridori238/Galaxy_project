@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using static ComponentPattern;
 using static InterfaceManager;
 using static UnityEditor.Progress;
@@ -22,16 +23,21 @@ public class BasicSword : Weapon, IComponentable, ISendItemDataAble
     [SerializeField] int option4;
     [SerializeField] int value4;
 
+    Sprite currentSprite;
 
-    
+
+    private void Start()
+    {
+        currentSprite = gameObject.GetComponent<Image>().sprite;
+    }
+
 
     private void Update()
     {
         if (currentItem.itemname == null)
         {
             currentItem = ItemData.instance.basicweaponData;
-            ItemInData();
-            
+            ItemInData();     
         }
         else
             return; 
@@ -65,13 +71,13 @@ public class BasicSword : Weapon, IComponentable, ISendItemDataAble
         throw new System.NotImplementedException();
     }
 
-    public Item OnSendItemDataAble(Item item)
+    public Item OnSendItemDataAble(Item item, Sprite sprite)
     {
         item = currentItem;
-
+        sprite = currentSprite;
         return item;
     }
-
+    // 아이템으로만 리턴 하기에 스프라이트는 리턴 되지 않는다 .. 나는 같이 보내고 싶다!
 }
 
 
