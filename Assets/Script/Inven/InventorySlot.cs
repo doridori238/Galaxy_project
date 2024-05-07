@@ -54,7 +54,7 @@ public class InventorySlot : MonoBehaviour, IComponentable
     public void Remove(IComponentable item, Sprite sprite)//(IComponentable item, GameObject[] slot)
     {
         itemLeaf.Remove(item);
-        itemSprite.Remove(sprite);
+        //itemSprite.Remove(sprite);
     }
 
     /// <summary>
