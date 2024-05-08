@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-
     [SerializeField] float enemyHp;
     [SerializeField] float enemyMaxHp;
     [SerializeField] float enemyCRT;
@@ -13,25 +12,24 @@ public class Enemy : MonoBehaviour
     [SerializeField] float enemySpeed;
 
 
-
     Rigidbody2D rigdbody;
     public int nextMove;
     Animator animator;
     SpriteRenderer spriteRenderer;
     Vector2 overlapsizevec = new Vector2(5, 0.2f);
-    Vector2 frontVec;
-    Collider2D targethit;
-    Collider2D attackzone;
-    Collider2D thiscollider;
-
+    Vector2 frontVec; 
+    [SerializeField] float sense;
+    RaycastHit2D floorhit2D;
+    Collider2D playerhit2D;
+    
 
     private void Start()
     {
         rigdbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        thiscollider = GetComponent<Collider2D>();
-        Invoke("Think", 5);
+       
+        Invoke("Think", 2);
     }
 
 
@@ -40,86 +38,100 @@ public class Enemy : MonoBehaviour
     {
         rigdbody.velocity = new Vector2(nextMove, rigdbody.velocity.y);
 
-        MoveEnemy();
-    }
-
-
-
-    void MoveEnemy()
-    { 
         frontVec = new Vector2(rigdbody.position.x + nextMove, rigdbody.position.y);
-        Debug.DrawRay(frontVec, Vector3.down, new Color(0, 1, 0));
-        RaycastHit2D floorhit2D = Physics2D.Raycast(frontVec, Vector3.down, 1, LayerMask.GetMask("Floor"));
+        Debug.DrawRay(frontVec, Vector3.left, new Color(5, 0, 0));
+
+        floorhit2D = Physics2D.Raycast(frontVec, Vector2.down, 1, 1<<6);
         if (floorhit2D.collider == null)
         {
             Turn();
         }
-   
+
+
+        playerhit2D = Physics2D.OverlapCircle(rigdbody.position, 2.5f,1<<7);
+        if (playerhit2D != null)
+        {
+            Vector2 hitdis = playerhit2D.transform.position - transform.position;
+            float degree = Mathf.Atan2(hitdis.x, hitdis.y) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0, degree, 0);
+
+            //nextMove = 0;
+
+           // TargetTrace();
+            Debug.Log("ÎèÑÎ¶¨");
+        
+        }
+
+
+
+
     }
 
 
 
     /// <summary>
-    /// TargetSense / ∞®¡ˆ
+    /// ÔøΩÔøΩÔøΩÔøΩ
     /// </summary>
-    void TargetSense()
-    {
+    /// <param name="collision"></param>
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+        
+    //    if (collision.gameObject.GetComponent<BoxCollider2D>() == null)
+    //        Turn(); 
+       
+    //}
 
-        targethit = Physics2D.OverlapBox(frontVec, overlapsizevec, 0, LayerMask.GetMask("Player"));
-     
-        if (targethit != null)
-            TargetTrace();
-        else
-            Turn();
-
-    }
 
 
 
     /// <summary>
-    /// TargetTrace / √ﬂ¿˚
+    /// TargetTrace / ÔøΩÔøΩÔøΩÔøΩ
     /// </summary>
     void TargetTrace()
     {
+       
+        //animator.SetBool("isWalk", false);
+       // TargetAttack();
 
-        // player √ﬂ¿˚
-        attackzone = Physics2D.OverlapCircle(frontVec, 1.5f);
-        if (attackzone != null)
-            TargetAttack();
-        else
-            TargetSense();
-
-    }
-
-
-
-    void TargetAttack()
-    {
-
+        //if (playerhit2D.composite == null)
+        //{
+        //    //nextMove = Random.Range(-1, 2);
+        //    Invoke("Think", 3f);
+        //    Debug.Log("Ï†ïÏÉÅ ÏûëÎèô");
+        //}
 
     }
 
 
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(rigdbody.position, overlapsizevec);
-    }
+    //void TargetAttack()
+    //{
+    //    //animator.SetBool("isTouch",true);
+    //    Debug.Log("Í≥µÍ≤©");
 
+
+    //    if (playerhit2D.composite == null)
+    //    {
+    //        //animator.SetBool("isTouch", false);
+    //        TargetTrace();
+    //    }
+
+
+    //}
 
 
     void Think()
     {
-        nextMove = Random.Range(-1, 2);
+        Debug.Log("ÎßéÏù¥ ÎÇòÏò®Îã§");
+        nextMove = Random.Range(-1, 2); //* 2;/// ÔøΩÔøΩÔøΩ‚º≠ ÔøΩ”µÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩ÷±ÔøΩ
 
 
         animator.SetBool("isWalk", true);
         if (nextMove != 0)
             spriteRenderer.flipX = nextMove == -1;
+        
 
-
-        float nextTime = Random.Range(2f, 5f);
+        float nextTime = Random.Range(2f, 4f);
         Invoke("Think", nextTime);
 
     }
@@ -128,6 +140,7 @@ public class Enemy : MonoBehaviour
 
     void Turn()
     {
+        
         nextMove *= -1;
         spriteRenderer.flipX = nextMove == -1;
 
@@ -138,11 +151,13 @@ public class Enemy : MonoBehaviour
     }
 
 
+
     void Die()
-    { 
-    
-    
+    {
+
+
     }
-   
+
+
 
 }

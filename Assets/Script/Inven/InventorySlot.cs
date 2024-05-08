@@ -78,6 +78,7 @@ public class InventorySlot : MonoBehaviour, IComponentable
     public void Operation()
     {
         throw new System.NotImplementedException();
+        Operation();
     }
 
     public void Slots(GameObject[] slot)
