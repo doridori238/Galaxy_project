@@ -7,10 +7,7 @@ using UnityEngine.UI;
 
 public class ButtonUi : MonoBehaviour
 {
-    // 버튼 리스트를 담아서 사용하기 버튼(컨테이너에 담아서 관리) 필요 시 불러서 사용 가능하게 해주기
-    // - 확장적인 부분과 관리적인 부분들을 리스트로 정리 및 연결이 목적
-
-    //무언가를 키는 버튼 리스트
+    
     [SerializeField] private Button menuButton;
     [SerializeField] private GameObject allbuttonImage;
     [SerializeField] private List<Button> gameSceneAllButton = new List<Button>();

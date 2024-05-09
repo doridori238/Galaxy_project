@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static ComponentPattern;
@@ -9,23 +10,32 @@ public class InventorySlot : MonoBehaviour, IComponentable
 {
     //리스트에 담아서 쓰기
     [SerializeField] private List<IComponentable> itemLeaf = new List<IComponentable>();
-    Dictionary<List<Sprite>, List<IComponentable>> invenUi = new Dictionary<List<Sprite>, List<IComponentable>>();
-   // [SerializeField] List<Sprite> itemSprite = new List<Sprite>();
-    [SerializeField] GameObject[] slot = new GameObject[20];
+    [SerializeField] List<Sprite> itemSprite = new List<Sprite>();
+    [SerializeField] Slot[] slot;
     [SerializeField] GameObject detailDataUi;
-    [SerializeField] Sprite itemdetailImage;
+    [SerializeField] GameObject itemdetailUiImage;
+    public Transform slotholer;
 
 
-    // 아이템 타입으로 분류된 아이템을 인벤토리 와 연결
-    //  itemData에 분류된 데이터를 가지고 와서 사용하는 곳! Ui랑 도 연동 되는 곳
-    // 인벤토리는 bool 여부로 비어 있는지 판단 후 들어갈 수 있도록
-    bool check = true;
+    public delegate void SlotcountDel(int slot);
+    public SlotcountDel slotcountDel;
+
+    int slotcount = 20;
+    public int SlotCount
+    {
+        get { return slotcount; }
+        set { slotcount = value;
+            slotcountDel.Invoke(SlotCount);
+        }
+    }
+   
+   
 
     public void Start()
     {
         //InvenSlot(slot);
-
-
+        slot = new Slot[slot.Length];
+        
     }
 
 
@@ -34,14 +44,29 @@ public class InventorySlot : MonoBehaviour, IComponentable
 
     }
 
+
+    //public void SlotChange(Slot[] slot)
+    //{
+    //    for (int i = 0; i < slot.Length ; i++)
+    //    {
+
+    //        if (i < )
+    //        { }
+    //        else
+        
+    //    }
+    //}
+
+
+
     /// <summary>
     /// componentpattern.add part
     /// </summary>
     /// <param name="leaf"></param>
-    public void Add(IComponentable item, Sprite sprite)//(IComponentable item, GameObject[] slot)
+    public void Add(IComponentable item,Sprite sprite)//(IComponentable item, GameObject[] slot)
     {
         itemLeaf.Add(item);
-        //itemSprite.Add(sprite);
+        itemSprite.Add(sprite);
         //invenUi.Add(itemLeaf[item], itemSprite[sprite]);
         Debug.Log(item);
 
@@ -51,7 +76,7 @@ public class InventorySlot : MonoBehaviour, IComponentable
     /// componentpattern.remove part
     /// </summary>
     /// <param name="leaf"></param>
-    public void Remove(IComponentable item, Sprite sprite)//(IComponentable item, GameObject[] slot)
+    public void Remove(IComponentable item)//(IComponentable item, GameObject[] slot)
     {
         itemLeaf.Remove(item);
         //itemSprite.Remove(sprite);
