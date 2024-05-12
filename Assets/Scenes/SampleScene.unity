@@ -955,7 +955,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 670488597}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -1248,9 +1248,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 768620894}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c97981bfb99ad241b2a7f816104df6f, type: 3}
+  m_Script: {fileID: 11500000, guid: 2d3e5c6cd7aca3842824e17ffa799dc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Enemytran: {fileID: 768620894}
+  attackparti: {fileID: 100000, guid: 18204b98237ccb540808f2cd2d78c2c8, type: 3}
 --- !u!1001 &780108578
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1662,11 +1664,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 347709437670123148, guid: c234c2d9dd844e6bbfcf2069ccf9e865, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1
+      value: 2.11
       objectReference: {fileID: 0}
     - target: {fileID: 347709437670123148, guid: c234c2d9dd844e6bbfcf2069ccf9e865, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: 2.45
       objectReference: {fileID: 0}
     - target: {fileID: 347709437670123148, guid: c234c2d9dd844e6bbfcf2069ccf9e865, type: 3}
       propertyPath: m_LocalPosition.z

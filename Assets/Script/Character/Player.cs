@@ -24,12 +24,15 @@ public class Player : MonoBehaviour, ISendItemDataAble, IGetItemDataAble
 
     float hjoy;
 
-    float hp;
+    float hp = 100;
     float maxhp = 500;
     public float Hp
     {
         get { return hp; }
-        set { maxhp = hp; }
+        set { maxhp = hp;
+            Debug.Log(Hp);
+        
+        }
     }
 
     float mp;
@@ -119,7 +122,24 @@ public class Player : MonoBehaviour, ISendItemDataAble, IGetItemDataAble
     {
         Debug.Log(OnSendItemData);
     }
-     
+
+
+    void Die()
+    {
+
+
+    }
+
+
+    void Hit()
+    {
+
+
+
+    }
+
+
+
 }
 
 
