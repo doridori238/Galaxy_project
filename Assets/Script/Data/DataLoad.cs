@@ -94,7 +94,7 @@ public struct Item
     public int value3;
     public int option4;
     public int value4;
-
+    public Sprite sprite;
 }
 
 public enum ITEMTYPE

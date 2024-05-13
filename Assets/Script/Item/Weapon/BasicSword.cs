@@ -22,13 +22,13 @@ public class BasicSword : Weapon, IComponentable, ISendItemDataAble
     [SerializeField] int value3;
     [SerializeField] int option4;
     [SerializeField] int value4;
+    [SerializeField] Sprite currentSprite;
 
-    Sprite currentSprite;
-
+   
 
     private void Start()
     {
-        //currentSprite = gameObject.GetComponent<Image>().sprite;
+        currentSprite = GetComponent<Image>().sprite;
     }
 
 
@@ -63,7 +63,7 @@ public class BasicSword : Weapon, IComponentable, ISendItemDataAble
         value2 = currentItem.value2;
         value3 = currentItem.value3;
         value4 = currentItem.value4;
-
+        currentItem.sprite = currentSprite;
     }
 
     public void Operation()
