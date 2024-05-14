@@ -11,31 +11,18 @@ public class InventorySlot : MonoBehaviour, IComponentable
     //리스트에 담아서 쓰기
     [SerializeField] private List<IComponentable> itemLeaf = new List<IComponentable>();
     [SerializeField] List<Sprite> itemSprite = new List<Sprite>();
-    [SerializeField] Slot[] slot;
+    [SerializeField] Slot[] slots;
     [SerializeField] GameObject detailDataUi;
     [SerializeField] GameObject itemdetailUiImage;
     public Transform slotholer;
 
 
-    public delegate void SlotcountDel(int slot);
-    public SlotcountDel slotcountDel;
-
-    int slotcount = 20;
-    public int SlotCount
-    {
-        get { return slotcount; }
-        set { slotcount = value;
-            slotcountDel.Invoke(SlotCount);
-        }
-    }
-   
-   
-
     public void Start()
     {
         //InvenSlot(slot);
-        slot = new Slot[slot.Length];
-        
+        slots = GetComponentsInChildren<Slot>();
+
+
     }
 
 
@@ -43,19 +30,6 @@ public class InventorySlot : MonoBehaviour, IComponentable
     {
 
     }
-
-
-    //public void SlotChange(Slot[] slot)
-    //{
-    //    for (int i = 0; i < slot.Length ; i++)
-    //    {
-
-    //        if (i < )
-    //        { }
-    //        else
-        
-    //    }
-    //}
 
 
 
@@ -119,8 +93,7 @@ public class InventorySlot : MonoBehaviour, IComponentable
 
 
 
-           // if (slot[0].GetComponent<Image>().sprite == null)
-         
+      
    
     
     

@@ -6,7 +6,7 @@ public class InterfaceManager : MonoBehaviour
 {
     public interface ISendItemDataAble
     {
-        Item OnSendItemDataAble(Item item);
+        Item GetItem();
     }
 
     public interface IGetItemDataAble

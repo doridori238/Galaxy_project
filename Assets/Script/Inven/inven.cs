@@ -1,18 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static InterfaceManager;
 
-public class inven : MonoBehaviour
+public class inven : Singleton<inven>
 {
-    // Start is called before the first frame update
+    public Slot[] slots;
+
+    
     void Start()
     {
-        
+        slots = GetComponentsInChildren<Slot>();
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
         
     }
+
+
 }

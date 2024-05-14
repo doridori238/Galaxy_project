@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -79,6 +80,7 @@ public class DataLoad : Singleton<DataLoad>
 
 }
 
+[Serializable]
 public struct Item
 {
     public int itemindex;

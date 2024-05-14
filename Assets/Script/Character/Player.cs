@@ -8,7 +8,7 @@ public class Player : MonoBehaviour, ISendItemDataAble, IGetItemDataAble
     public Button jumpButton;
     public FixedJoystick joystick = null;
     public RectTransform handle = null;
-
+    public Slot slot;
 
     Rigidbody2D playerRd;
     float maxspeed = 3f;
@@ -62,8 +62,8 @@ public class Player : MonoBehaviour, ISendItemDataAble, IGetItemDataAble
     private void Start()
     {
         playerRd = GetComponent<Rigidbody2D>();
-        jumpButton.onClick.AddListener(() => { playerRd.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); Debug.Log("점프"); }); 
-
+        jumpButton.onClick.AddListener(() => { playerRd.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); Debug.Log("점프"); });
+       
     }
 
 
@@ -99,20 +99,19 @@ public class Player : MonoBehaviour, ISendItemDataAble, IGetItemDataAble
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Sprite itemImage = collision.gameObject.GetComponent<SpriteRenderer>().sprite;
 
-        ISendItemDataAble currentitem = collision.gameObject.GetComponent<ISendItemDataAble>();
-        GetItemDataAble(currentitem);
+        ISendItemDataAble item = collision.gameObject.GetComponent<ISendItemDataAble>();
+        slot.GetItemDataAble(item);
+        collision.gameObject.SetActive(false);
 
-        IComponentable currentitemCompo = collision.gameObject.GetComponent<IComponentable>();
-        compositeinvenslot.Add(currentitemCompo, itemImage);
 
     }
 
    
 
 
-    public Item OnSendItemDataAble(Item item)
+  
+    public Item GetItem()
     {
         throw new NotImplementedException();
     }
@@ -121,6 +120,7 @@ public class Player : MonoBehaviour, ISendItemDataAble, IGetItemDataAble
     public void GetItemDataAble(ISendItemDataAble OnSendItemData)
     {
         Debug.Log(OnSendItemData);
+
     }
 
 
@@ -138,8 +138,22 @@ public class Player : MonoBehaviour, ISendItemDataAble, IGetItemDataAble
 
     }
 
-
-
 }
 
 
+//Sprite itemImage = collision.gameObject.GetComponent<SpriteRenderer>().sprite;
+
+// item = collision.gameObject.GetComponent<ISendItemDataAble>().GetItem();
+//slot.GetItemDataAble(item);
+
+// 1. 플래이어와 아이템이 트리거가 일어나면 아이템을 인벤토리[슬롯]에 플래이어가 보내준다.
+// 2. 보내진 아이템이 UI에 보여야한다. [스프라이트 , 아이템 이름]
+
+
+//Slot slot = inven.instance.slots[0];
+//Item slotitem = collision.gameObject.GetComponent<BasicSword>().currentItem;
+//slot.SetSlot(slotitem);
+
+
+//IComponentable currentitemCompo = collision.gameObject.GetComponent<IComponentable>();
+//compositeinvenslot.Add(currentitemCompo, itemImage);
