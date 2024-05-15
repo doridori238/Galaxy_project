@@ -4,15 +4,17 @@ using UnityEngine;
 using static ComponentPattern;
 using static InterfaceManager;
 
-public class GoodHpPotion : HpPotion, IComponentable, ISendItemDataAble
+public class GoodHpPotion : HpPotion, IComponentable
 {
 
     [SerializeField] public Item currentItem;
+    public ItemClass currentClass;
 
     private void Start()
     {
         currentItem = DataLoad.instance.valuesList[1];
         currentItem.sprite = GetComponent<SpriteRenderer>().sprite;
+        currentClass = GetComponent<GoodHpPotion>();
     }
 
 
@@ -22,8 +24,19 @@ public class GoodHpPotion : HpPotion, IComponentable, ISendItemDataAble
     }
 
 
-    public Item GetItem()
+    public override void ItemUse(Player player)
     {
-        return this.currentItem;
+        player.Hp += currentItem.value1;
     }
+
+
+    public override ItemClass GetItemClass()
+    {
+        this.CurrentItem = currentItem;
+        return this.ItemClassName = currentClass;
+    }
+
+
+
+
 }

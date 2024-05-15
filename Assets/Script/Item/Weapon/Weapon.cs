@@ -6,14 +6,7 @@ using UnityEngine;
 
 public class Weapon : ItemClass
 {
-    public override void ItemInData()
-    { 
     
-      
-    }
-
-   
-
 
 }
 

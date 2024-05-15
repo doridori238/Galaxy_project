@@ -4,15 +4,17 @@ using UnityEngine;
 using static ComponentPattern;
 using static InterfaceManager;
 
-public class GoodMpPotion : MpPotion, IComponentable, ISendItemDataAble
+public class GoodMpPotion : MpPotion, IComponentable
 {
 
     [SerializeField] public Item currentItem;
+    public ItemClass currentClass;
 
     private void Start()
     {
         currentItem = DataLoad.instance.valuesList[4];
         currentItem.sprite = GetComponent<SpriteRenderer>().sprite;
+        currentClass = GetComponent<GoodMpPotion>();
     }
 
 
@@ -22,8 +24,17 @@ public class GoodMpPotion : MpPotion, IComponentable, ISendItemDataAble
     }
 
 
-    public Item GetItem()
+
+    public override void ItemUse(Player player)
     {
-        return this.currentItem;
+        player.Mp += currentItem.value1;
     }
+
+
+    public override ItemClass GetItemClass()
+    {
+        this.CurrentItem = currentItem;
+        return this.ItemClassName = currentClass;
+    }
+
 }

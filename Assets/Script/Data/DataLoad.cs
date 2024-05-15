@@ -81,7 +81,7 @@ public class DataLoad : Singleton<DataLoad>
 }
 
 [Serializable]
-public struct Item
+public struct Item 
 {
     public int itemindex;
     public string itemname;

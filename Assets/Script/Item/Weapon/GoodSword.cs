@@ -4,14 +4,16 @@ using UnityEngine;
 using static ComponentPattern;
 using static InterfaceManager;
 
-public class GoodSword : Weapon, IComponentable, ISendItemDataAble
+public class GoodSword : Weapon, IComponentable
 {
     [SerializeField] public Item currentItem;
+    public ItemClass currentClass;
 
     private void Start()
     {
         currentItem = DataLoad.instance.valuesList[7];
         currentItem.sprite = GetComponent<SpriteRenderer>().sprite;
+        currentClass = GetComponent<GoodSword>();
     }
 
 
@@ -20,9 +22,17 @@ public class GoodSword : Weapon, IComponentable, ISendItemDataAble
         throw new System.NotImplementedException();
     }
 
-
-    public Item GetItem()
+    public override void ItemUse(Player player)
     {
-        return this.currentItem;
+        player.Crt += currentItem.value1;
+
+    }
+
+    
+
+    public override ItemClass GetItemClass()
+    {
+        this.CurrentItem = currentItem;
+        return this.ItemClassName = currentClass;
     }
 }

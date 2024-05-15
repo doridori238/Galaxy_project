@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class HpPotion : ItemClass
 {
-    public override void ItemInData()
-    {
-
-
-    }
-
+ 
 
 }

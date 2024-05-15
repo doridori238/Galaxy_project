@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class InterfaceManager : MonoBehaviour
 {
+   
     public interface ISendItemDataAble
     {
-        Item GetItem();
+        ItemClass GetItemClass();
     }
 
     public interface IGetItemDataAble

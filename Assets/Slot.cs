@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -18,13 +19,19 @@ public class Slot : MonoBehaviour, IGetItemDataAble ,IPointerDownHandler,IPointe
 
     public Button[] detailUibuttons = new Button[3];
 
+    ItemClass itemClass1;
     public Item slotitem;
+    Item nullItem;
 
+    Player player;
+    
     private void Start()
     {
-        //detailUibuttons[0].onClick.AddListener(); 사용하는 버튼
-        //detailUibuttons[1].onClick.AddListener(); 버리는 버튼
+        player = Player.instance;
+        detailUibuttons[0].onClick.AddListener(() => { Use(); }); 
+        detailUibuttons[1].onClick.AddListener(() => { ReMove(); }); 
         detailUibuttons[2].onClick.AddListener(() => { detailUi.SetActive(false); });
+
     }
 
     public void SetSlot(Item item)
@@ -44,13 +51,23 @@ public class Slot : MonoBehaviour, IGetItemDataAble ,IPointerDownHandler,IPointe
     }
 
     public void Use()
-    { 
-        //아이템.아이템사용();
-    
+    {
+        itemClass1.ItemUse(player);
+        
+        Debug.Log("Use");
     }
 
     public void ReMove()
-    { 
+    {
+        detaildata.text= null;
+        detalItemImage.sprite = null;
+        itemSprite.sprite = null;
+        itemName.text = null;
+        itemClass1 = null;
+        slotitem = nullItem;
+
+        Debug.Log("remove");
+
         // 아이템 버리기();
         // 슬롯에서 버리기!
     }
@@ -58,8 +75,10 @@ public class Slot : MonoBehaviour, IGetItemDataAble ,IPointerDownHandler,IPointe
     public void GetItemDataAble(ISendItemDataAble OnSendItemData)
     {
          Debug.Log("아이템 받음 " + OnSendItemData);
+        
+         itemClass1 = OnSendItemData.GetItemClass();
 
-         slotitem = OnSendItemData.GetItem();
+         slotitem = itemClass1.ItemClassName.CurrentItem;
          SetSlot(slotitem);
 
     }
@@ -78,7 +97,10 @@ public class Slot : MonoBehaviour, IGetItemDataAble ,IPointerDownHandler,IPointe
     {
         Debug.Log(gameObject.name + "클릭");
         detailUi.SetActive(true);
-        detaildata.text = slotitem.itemname ;
+        detaildata.text = slotitem.itemname + slotitem.lvlimit + slotitem.value1 ;
         detalItemImage.sprite = slotitem.sprite;
     }
 }
+
+//1. 아이템 클래스 상속 관계 좀 더 정리 멤버변수나 멤버함수
+//2. 인벤토리 기능 만들고

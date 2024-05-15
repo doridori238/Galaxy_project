@@ -5,15 +5,17 @@ using UnityEngine;
 using static ComponentPattern;
 using static InterfaceManager;
 
-public class StrongSword : Weapon, IComponentable, ISendItemDataAble
+public class StrongSword : Weapon, IComponentable
 {
 
     [SerializeField] public Item currentItem;
+    public ItemClass currentClass;
 
     private void Start()
     {
         currentItem = DataLoad.instance.valuesList[8];
         currentItem.sprite = GetComponent<SpriteRenderer>().sprite;
+        currentClass = GetComponent<StrongSword>();
     }
 
 
@@ -23,9 +25,17 @@ public class StrongSword : Weapon, IComponentable, ISendItemDataAble
     }
 
 
-    public Item GetItem()
+    public override void ItemUse(Player player)
     {
-        return this.currentItem;
+        player.Crt += currentItem.value1;
+
+    }
+
+
+    public override ItemClass GetItemClass()
+    {
+        this.CurrentItem = currentItem;
+        return this.ItemClassName = currentClass;
     }
 
 }

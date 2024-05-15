@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static ComponentPattern;
 using static InterfaceManager;
-public class Player : MonoBehaviour, ISendItemDataAble, IGetItemDataAble
+public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
 {
     public Button jumpButton;
     public FixedJoystick joystick = null;
@@ -24,21 +24,22 @@ public class Player : MonoBehaviour, ISendItemDataAble, IGetItemDataAble
 
     float hjoy;
 
-    float hp = 100;
+    [SerializeField]float hp = 100;
     float maxhp = 500;
+
+    
     public float Hp
     {
         get { return hp; }
-        set { maxhp = hp;
-            Debug.Log(Hp);
-        
+        set { hp = value;
+            Debug.Log(Hp); 
         }
     }
 
     float mp;
     float maxMp = 500;
 
-    public float MaxMp
+    public float Mp
     {
         get { return mp; }
         set { maxMp = mp; }
@@ -47,7 +48,14 @@ public class Player : MonoBehaviour, ISendItemDataAble, IGetItemDataAble
     /// <summary>
     /// Ä¡¸íÅ¸ È®·ü
     /// </summary>
-    float crt;
+    [SerializeField] float crt;
+    public float Crt
+    {
+        get { return crt; }
+        set { crt = value; }
+    
+    }
+
     /// <summary>
     /// °ø°Ý·Â ´ëÆø
     /// </summary>
@@ -109,8 +117,6 @@ public class Player : MonoBehaviour, ISendItemDataAble, IGetItemDataAble
 
    
 
-
-  
     public Item GetItem()
     {
         throw new NotImplementedException();
@@ -138,6 +144,10 @@ public class Player : MonoBehaviour, ISendItemDataAble, IGetItemDataAble
 
     }
 
+    public ItemClass GetItemClass()
+    {
+        throw new NotImplementedException();
+    }
 }
 
 
