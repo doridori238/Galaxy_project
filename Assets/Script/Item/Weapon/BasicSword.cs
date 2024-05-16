@@ -11,7 +11,7 @@ public class BasicSword : Weapon, IComponentable
 {
     [SerializeField] public Item currentItem;
     public ItemClass currentClass;
-
+    Item nullitem;
     private void Start()
     {
         currentItem = DataLoad.instance.valuesList[6];
@@ -31,8 +31,8 @@ public class BasicSword : Weapon, IComponentable
         player.Crt += currentItem.value1;
 
     }
-  
 
+   
     public override ItemClass GetItemClass()
     {
                this.CurrentItem = currentItem;

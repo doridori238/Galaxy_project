@@ -8,7 +8,7 @@ public class GoodSword : Weapon, IComponentable
 {
     [SerializeField] public Item currentItem;
     public ItemClass currentClass;
-
+    Item nullitem;
     private void Start()
     {
         currentItem = DataLoad.instance.valuesList[7];
@@ -28,7 +28,7 @@ public class GoodSword : Weapon, IComponentable
 
     }
 
-    
+  
 
     public override ItemClass GetItemClass()
     {

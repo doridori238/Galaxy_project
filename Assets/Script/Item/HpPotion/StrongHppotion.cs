@@ -9,6 +9,7 @@ public class StrongHppotion : HpPotion, IComponentable
 
     [SerializeField] public Item currentItem;
     public ItemClass currentClass;
+    Item nullitem;
 
     private void Start()
     {
@@ -28,7 +29,7 @@ public class StrongHppotion : HpPotion, IComponentable
         player.Hp += currentItem.value1;
     }
 
-
+    
     public override ItemClass GetItemClass()
     {
         this.CurrentItem = currentItem;

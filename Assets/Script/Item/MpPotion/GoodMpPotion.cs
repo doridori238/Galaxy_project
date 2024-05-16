@@ -9,7 +9,7 @@ public class GoodMpPotion : MpPotion, IComponentable
 
     [SerializeField] public Item currentItem;
     public ItemClass currentClass;
-
+    Item nullitem;
     private void Start()
     {
         currentItem = DataLoad.instance.valuesList[4];
@@ -29,7 +29,7 @@ public class GoodMpPotion : MpPotion, IComponentable
     {
         player.Mp += currentItem.value1;
     }
-
+    
 
     public override ItemClass GetItemClass()
     {

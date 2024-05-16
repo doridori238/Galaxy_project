@@ -10,7 +10,7 @@ public class StrongSword : Weapon, IComponentable
 
     [SerializeField] public Item currentItem;
     public ItemClass currentClass;
-
+    Item nullitem;
     private void Start()
     {
         currentItem = DataLoad.instance.valuesList[8];
@@ -31,7 +31,7 @@ public class StrongSword : Weapon, IComponentable
 
     }
 
-
+   
     public override ItemClass GetItemClass()
     {
         this.CurrentItem = currentItem;

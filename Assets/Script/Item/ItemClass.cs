@@ -24,12 +24,7 @@ public  class ItemClass : MonoBehaviour, ISendItemDataAble
         set { currnetItem = value; }
     }
 
-
-    public virtual Item GetItem()
-    {
-        throw new System.NotImplementedException();
-    }
-
+   
 
     public virtual ItemClass GetItemClass()
     {
@@ -37,11 +32,9 @@ public  class ItemClass : MonoBehaviour, ISendItemDataAble
     }
 
 
-    public virtual void ItemUse(Player player)
-    {
-       
+    public virtual void ItemUse(Player player){ }
 
-    }
+   
 
 
 }

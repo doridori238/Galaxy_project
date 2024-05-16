@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Enemy : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class Enemy : MonoBehaviour
     Collider2D Monstercoll;
     public GameObject attackparti;
     GameObject partiecle;
-    float atk = 50;
+    [SerializeField] float atk = 5;
 
     public float Atk
     {
@@ -25,19 +26,20 @@ public class Enemy : MonoBehaviour
     
     }
 
-    int lv = 1;
+    [SerializeField] int lv = 1;
     public int LV
     {
         get { return lv; }
         set { lv = value; }
     }
 
-    int enemyHp;
-    public int EnemyHP
+    [SerializeField] float enemyHp = 50;
+    public float EnemyHP
     {
         get { return enemyHp; }
         set {
             enemyHp = value;
+            Debug.Log(EnemyHP + "젤리 목숨");
             if (EnemyHP < 1)
                 Die();
         }
@@ -58,26 +60,30 @@ public class Enemy : MonoBehaviour
     {
         rigdbody.velocity = new Vector2(nextspeed, 0);
 
-        frontVec = new Vector2(rigdbody.position.x + nextspeed, 0);
+        frontVec = new Vector2(rigdbody.position.x + nextspeed,rigdbody.position.y);
 
-        Debug.DrawRay(frontVec, Vector3.down, new Color(5, 0, 0));
+        Debug.DrawRay(frontVec, Vector3.down, new Color(2, 0, 0));
 
         floorhit2D = Physics2D.Raycast(frontVec, Vector2.down, 2, 1 << 6);
         if (floorhit2D.collider == null)
-            Turn();
+        { 
+             Turn();
+        }
 
 
-        playerhit2D = Physics2D.OverlapCircle(rigdbody.position, 3f, 1 << 7);
+        playerhit2D = Physics2D.OverlapCircle(rigdbody.position, 2.5f, 1 << 7);
         if (playerhit2D != null)
         {
-            if (playerhit2D.Distance(Monstercoll).distance < 2)
+            if (playerhit2D.Distance(Monstercoll).distance < 1.5)
             {
+                StopCoroutine(EnemyMove());
                 nextspeed = 0;
                 frontVec = new Vector2(rigdbody.position.x + nextspeed, 0);
-                StopCoroutine(EnemyMove());
-                Player targetHp = playerhit2D.GetComponent<Player>();
-                
+                Player targetHp = Player.instance;
+
                 Debug.Log(targetHp.Hp);
+
+                
                 Attack(targetHp);
 
             }
@@ -106,7 +112,7 @@ public class Enemy : MonoBehaviour
 
         yield return null;
     }
-
+   
 
     void Turn()
     {
@@ -119,10 +125,9 @@ public class Enemy : MonoBehaviour
     {
         Debug.Log(targetHp.Hp + "Hp");
         animator.SetBool("isWalk", false);
-        rigdbody.velocity = new Vector2(rigdbody.position.x, 0);
-
+        //rigdbody.velocity = new Vector2(rigdbody.position.x, 0);
         animator.SetTrigger("doTouch");
-        targetHp.Hp -= Atk;
+        //targetHp.Hp -= Atk;
 
     }
 
@@ -131,6 +136,8 @@ public class Enemy : MonoBehaviour
     {
         Debug.Log("꽁~격!!!");
         partiecle.SetActive(true);
+        Player.instance.Hp -= Atk;
+
     }
 
 
@@ -144,8 +151,7 @@ public class Enemy : MonoBehaviour
 
     void Die()
     {
-        // 죽는 애니메이션이 들어감
-    
+        gameObject.SetActive(false);
     }
 
 

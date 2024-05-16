@@ -2,11 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static InterfaceManager;
+using static UnityEditor.Progress;
 
 public class Slot : MonoBehaviour, IGetItemDataAble ,IPointerDownHandler,IPointerUpHandler,IPointerClickHandler
 {
@@ -19,18 +21,20 @@ public class Slot : MonoBehaviour, IGetItemDataAble ,IPointerDownHandler,IPointe
 
     public Button[] detailUibuttons = new Button[3];
 
-    ItemClass itemClass1;
+    public ItemClass itemClass1;
     public Item slotitem;
     Item nullItem;
 
+    Slot thisSlot;
     Player player;
-    
+
+    PointerEventData eventData;
+    EventSystem buttonevent;
+
     private void Start()
     {
+        thisSlot = gameObject.GetComponent<Slot>();
         player = Player.instance;
-        detailUibuttons[0].onClick.AddListener(() => { Use(); }); 
-        detailUibuttons[1].onClick.AddListener(() => { ReMove(); }); 
-        detailUibuttons[2].onClick.AddListener(() => { detailUi.SetActive(false); });
 
     }
 
@@ -52,31 +56,34 @@ public class Slot : MonoBehaviour, IGetItemDataAble ,IPointerDownHandler,IPointe
 
     public void Use()
     {
-        itemClass1.ItemUse(player);
-        
+        if (itemClass1 == null)
+            return;
+        else if (itemClass1 != null)
+        { 
+          itemClass1.ItemUse(player);
+          ReMove();
+        }
+
         Debug.Log("Use");
     }
 
     public void ReMove()
     {
-        detaildata.text= null;
-        detalItemImage.sprite = null;
-        itemSprite.sprite = null;
-        itemName.text = null;
-        itemClass1 = null;
-        slotitem = nullItem;
+        gameObject.GetComponent<Slot>().itemClass1 = null;
+        gameObject.GetComponent<Slot>().slotitem = nullItem;
+        gameObject.GetComponent<Slot>().SetSlot(nullItem);
 
         Debug.Log("remove");
 
-        // 아이템 버리기();
-        // 슬롯에서 버리기!
     }
 
     public void GetItemDataAble(ISendItemDataAble OnSendItemData)
     {
          Debug.Log("아이템 받음 " + OnSendItemData);
-        
-         itemClass1 = OnSendItemData.GetItemClass();
+        if (OnSendItemData.GetType() == typeof(ISendItemDataAble))
+            itemClass1 = OnSendItemData.GetItemClass();
+        else
+            return;
 
          slotitem = itemClass1.ItemClassName.CurrentItem;
          SetSlot(slotitem);
@@ -85,12 +92,8 @@ public class Slot : MonoBehaviour, IGetItemDataAble ,IPointerDownHandler,IPointe
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log(gameObject.name +"다운");
-    }
-
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        Debug.Log(gameObject.name + "업");
+        Debug.Log(gameObject.name + "다운");
+       
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -99,8 +102,18 @@ public class Slot : MonoBehaviour, IGetItemDataAble ,IPointerDownHandler,IPointe
         detailUi.SetActive(true);
         detaildata.text = slotitem.itemname + slotitem.lvlimit + slotitem.value1 ;
         detalItemImage.sprite = slotitem.sprite;
+        detailUibuttons[0].onClick.AddListener(() => { Use(); });
+        detailUibuttons[1].onClick.AddListener(() => { ReMove(); });
+        detailUibuttons[2].onClick.AddListener(() => { detailUi.SetActive(false); });
+       
     }
+
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+
+        Debug.Log(gameObject.name + "업");
+    }
+
 }
 
-//1. 아이템 클래스 상속 관계 좀 더 정리 멤버변수나 멤버함수
-//2. 인벤토리 기능 만들고

@@ -9,7 +9,6 @@ public class PoolingManager : MonoBehaviour
     public GameObject targetPrafab;
     public Queue<GameObject> pool = new Queue<GameObject>();
 
-
     private void Awake()
     {
         if (instance == null)

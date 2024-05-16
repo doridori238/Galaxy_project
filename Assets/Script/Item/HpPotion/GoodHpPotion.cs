@@ -9,6 +9,7 @@ public class GoodHpPotion : HpPotion, IComponentable
 
     [SerializeField] public Item currentItem;
     public ItemClass currentClass;
+    Item nullitem;
 
     private void Start()
     {
@@ -29,6 +30,7 @@ public class GoodHpPotion : HpPotion, IComponentable
         player.Hp += currentItem.value1;
     }
 
+   
 
     public override ItemClass GetItemClass()
     {

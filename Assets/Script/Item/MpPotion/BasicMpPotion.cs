@@ -9,6 +9,7 @@ public class BasicMpPotion : MpPotion, IComponentable
 
     [SerializeField] public Item currentItem;
     public ItemClass currentClass;
+    Item nullitem;
 
     private void Start()
     {
@@ -28,6 +29,7 @@ public class BasicMpPotion : MpPotion, IComponentable
         player.Mp += currentItem.value1;
     }
 
+ 
 
     public override ItemClass GetItemClass()
     {
