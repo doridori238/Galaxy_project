@@ -1,9 +1,12 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static ComponentPattern;
 using static InterfaceManager;
+using static UnityEngine.GraphicsBuffer;
+
 public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
 {
     public Button jumpButton;
@@ -59,7 +62,7 @@ public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
     {
         get { return hp; }
         set { hp = value;
-            Debug.Log(Hp);
+           // Debug.Log(Hp);
         }
     }
 
@@ -111,7 +114,8 @@ public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
                 return;
         
         });
-
+        attackZone = attackZone.GetComponent<BoxCollider2D>();
+      
     }
 
 
@@ -122,31 +126,16 @@ public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
     }
 
     RaycastHit2D enemyhit;
-    Enemy targetenemy;
+    Enemy[] targetenemy;
 
     private void FixedUpdate()
     {
         playerRd.AddForce(Vector2.right * hjoy, ForceMode2D.Impulse);
         PlayerMove();
-        enemyhit = Physics2D.Raycast(playerRd.velocity,new Vector2(playerRd.position.x,playerRd.position.y),5,1<<8);
-        if (enemyhit.rigidbody != null)
-        {
-            targetenemy = enemyhit.rigidbody.GetComponent<Enemy>();
-            Attack(targetenemy);
-        }
-        else
-            return;
+        AttackZoneRange();
 
-        //if (playersprite.flipX == true)
-        //{
-        //    attackZone.offset = new Vector2(-3, 0);
-        //    attackZone.size = new Vector2(4, 0);
-        //}
-        //else
-        //{ 
-        //    attackZone.offset = new Vector2(3, 0);
-        //    attackZone.size = new Vector2(4, 0);
-        //}
+       // CoolTimesSkills();
+
     }
 
     void PlayerMove()
@@ -171,6 +160,17 @@ public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
     }
 
 
+    String pointerEntervalue;
+
+    public String PointerEnterValue
+    {
+        get { return pointerEntervalue; }
+        set { pointerEntervalue = value;
+            Debug.Log("이벤트 돈다");
+        }
+    }
+
+    public GameObject[] skillUI;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -180,14 +180,18 @@ public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
             InvenUi.instance.GetItemDataAble(item);
             collision.gameObject.SetActive(false);
         }
-        else
-            return;
-        //else if(collision.gameObject.GetComponent<Enemy>() != null)
-           
-        //    Attack(targetenemy);
+        else if (collision.gameObject.GetComponents<Enemy>() != null && PointerEnterValue != null)
+        {
+            targetenemy = collision.gameObject.GetComponents<Enemy>();
+             Attackdetail(targetenemy);
+
+            targetenemy = null;
+        }
 
         Debug.Log("내가 먹었따");
     }
+
+   
 
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -206,6 +210,102 @@ public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
 
     }
 
+    //bool cool;
+    //public bool Cool
+    //{
+    //    get { return cool; }
+    //    set { cool = value; }
+    //}
+
+
+    //void CoolTimesSkills()
+    //{
+
+    //    if (skillUI[0].GetComponent<SkillState>().Cool == false)
+          
+    //    else if (skillUI[1].GetComponent<SkillState>().Cool == false)
+           
+    //    else if (skillUI[1].GetComponent<SkillState>().Cool == false)
+         
+
+    //}
+
+
+    void Attackdetail(Enemy[] targas)
+    {
+        Debug.Log("젤리 공격!!!!!!");
+        if (PointerEnterValue == skillUI[0].name && skillUI[0].GetComponent<SkillState>().Cool == true)
+            foreach (Enemy targa in targas)
+            {
+                targa.EnemyHP -= Crt;
+                
+                Debug.Log("기본공격 성공");
+            }
+        else if (PointerEnterValue == skillUI[1].name && skillUI[1].GetComponent<SkillState>().Cool == true)
+            foreach (Enemy targa in targas)
+            {
+                targa.EnemyHP -= Crt * 1.5f;
+                
+                Debug.Log("작은공격 성공");
+            }
+        else if (PointerEnterValue == skillUI[2].name && skillUI[2].GetComponent<SkillState>().Cool == true)
+            foreach (Enemy targa in targas)
+            {
+                targa.EnemyHP -= Crt * 0.7f;
+               
+                Debug.Log("큰공격 성공");
+            }
+
+    }
+
+
+    public GameObject componentAttackZone;
+    public  BoxCollider2D attackZone;
+  
+
+    public float basicAttackZone = 3;
+    public float littleAttackZone = 2;
+    public float bigAttackZone = 0f;
+    void AttackZoneRange()
+    {
+        switch (SKILLS)
+        {
+            case SKILL.BASIC_ATTACK:
+                attackZone.size = new Vector2(4, 2);
+                if (PlayerForwardSprite == true)
+                    attackZone.offset = new Vector2(basicAttackZone, 0);
+                else
+                    attackZone.offset = new Vector2(basicAttackZone * -1, 0);
+
+                break;
+
+            case SKILL.LITTLE_ATTACK:
+                attackZone.size = new Vector2(2, 2);
+                if (PlayerForwardSprite == true)
+                    attackZone.offset = new Vector2(littleAttackZone, 0);
+                else
+                    attackZone.offset = new Vector2(littleAttackZone * -1, 0);
+
+               
+                break;
+            case SKILL.BIG_ATTACK:
+                attackZone.size = new Vector2(11, 2);
+                attackZone.offset = new Vector2(0, 0);
+               
+
+                break;
+
+        }
+
+
+
+
+    }
+
+    public ItemClass GetItemClass()
+    {
+        throw new NotImplementedException();
+    }
 
     void Die()
     {
@@ -218,51 +318,6 @@ public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
         // 애니메이션
     }
 
-   public  BoxCollider2D attackZone;
-
-    void Attack(Enemy targa)
-    {
-        Debug.Log("타겟의 목숨 줄인다!!!");
-        switch (SKILLS)
-        {
-            case SKILL.BASIC_ATTACK:
-                //attackZone.
-                //if (PlayerForwardSprite == true)
-                //    attackZone.GetComponent<BoxCollider2D>().offset.Set(3,0);
-                //else
-                //    attackZone.GetComponent<BoxCollider2D>().offset.Set(-3, 0);
-
-                targa.EnemyHP -= Crt;
-                break;
-
-            case SKILL.LITTLE_ATTACK:
-                //attackZone.GetComponent<BoxCollider2D>().size.Set(2, 0);
-                //if (PlayerForwardSprite == true)
-                //    attackZone.GetComponent<BoxCollider2D>().offset.Set(2, 0);
-                //else
-                //    attackZone.GetComponent<BoxCollider2D>().offset.Set(-2, 0);
-
-                targa.EnemyHP -= Crt * 1.5f;
-                break;
-            case SKILL.BIG_ATTACK:
-                //attackZone.GetComponent<BoxCollider2D>().size.Set(10, 0);
-                //attackZone.GetComponent<BoxCollider2D>().offset.Set(0, 0);
-
-                targa.EnemyHP -= Crt * 0.7f;
-                break;
-        
-        }
-
-    }
-
-  
-
-    public ItemClass GetItemClass()
-    {
-        throw new NotImplementedException();
-    }
-
-
 }
 
 public enum SKILL
@@ -270,3 +325,24 @@ public enum SKILL
     BASIC_ATTACK, LITTLE_ATTACK,BIG_ATTACK
 }
 
+
+
+//enemyhit = Physics2D.Raycast(playerRd.velocity,new Vector2(playerRd.position.x,playerRd.position.y),5,1<<8);
+//if (enemyhit.rigidbody != null)
+//{
+//    targetenemy = enemyhit.rigidbody.GetComponent<Enemy>();
+//    Attack(targetenemy);
+//}
+//else
+//    return;
+
+//if (playersprite.flipX == true)
+//{
+//    attackZone.offset = new Vector2(-3, 0);
+//    attackZone.size = new Vector2(4, 0);
+//}
+//else
+//{ 
+//    attackZone.offset = new Vector2(3, 0);
+//    attackZone.size = new Vector2(4, 0);
+//}

@@ -81,7 +81,7 @@ public class Enemy : MonoBehaviour
                 frontVec = new Vector2(rigdbody.position.x + nextspeed, 0);
                 Player targetHp = Player.instance;
 
-                Debug.Log(targetHp.Hp);
+                //Debug.Log(targetHp.Hp);
 
                 
                 Attack(targetHp);
@@ -123,7 +123,7 @@ public class Enemy : MonoBehaviour
 
     void Attack(Player targetHp)
     {
-        Debug.Log(targetHp.Hp + "Hp");
+        //Debug.Log(targetHp.Hp + "Hp");
         animator.SetBool("isWalk", false);
         //rigdbody.velocity = new Vector2(rigdbody.position.x, 0);
         animator.SetTrigger("doTouch");
