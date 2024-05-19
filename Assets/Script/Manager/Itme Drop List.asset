@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c157b8dbe8a7614498186a211f05a909, type: 3}
+  m_Name: Itme Drop List
+  m_EditorClassIdentifier: 
+  itemList:
+  - {fileID: 6465359505005872782, guid: ca7d375cd9d4541468a1fe6a0187fa57, type: 3}
+  - {fileID: 6383878060960561978, guid: a38fbd81cb83e9247bed814a4a389658, type: 3}
+  - {fileID: 1588566118672288983, guid: 96779bf374d272c4cb0fb2cdee63d410, type: 3}
+  - {fileID: 2792689584627976662, guid: f973909346a8c6643ad21b52393eaf95, type: 3}
+  - {fileID: 3488939857580227691, guid: 03115059e4e6e294185b96deca5edcfb, type: 3}
+  - {fileID: 7101123476944928620, guid: 3d551d9b43169b24eafc17f9884da884, type: 3}
+  - {fileID: 3576559101979351695, guid: 21a87ba72d2a68842804fce30d3b3179, type: 3}
+  - {fileID: 6459702046668691976, guid: 2ae0c1293d0c469478f292e05c3cb677, type: 3}
+  - {fileID: 1625335655652490748, guid: 5e0d0730f0b7f234cb66c2814e4dacb3, type: 3}

@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 using UnityEngine.Pool;
+using static UnityEditor.PlayerSettings;
 
 public class PoolingManager : MonoBehaviour
 {
     public static PoolingManager instance = null;
-    public GameObject targetPrafab;
-    public Queue<GameObject> pool = new Queue<GameObject>();
 
     private void Awake()
     {
@@ -16,24 +16,42 @@ public class PoolingManager : MonoBehaviour
         else
             Destroy(gameObject);
 
-        Init();
     }
 
-    public void Init()
+    public GameObject targetPrafab;
+    public int initSize;
+    public Queue<GameObject> pool = new Queue<GameObject>();
+
+    private void Start()
     {
-        for (int i = 0; i<10;i++)
-        {
-            pool.Enqueue(Instantiate(targetPrafab));
-            pool.Peek().gameObject.SetActive(false);
-
-        }
-
+        pool = new Queue<GameObject>();
+        AddPool(initSize);
     }
 
 
-    public void Pop()
-    { 
+    
+
+    public void AddPool(int size)
+    {
+        for (int i = 0; i < size; i++)
+        {
+            GameObject copyObject = null;
+            copyObject = Instantiate(targetPrafab);
+            copyObject.SetActive(false);
+            pool.Enqueue(copyObject);
+        }
+    }
+
+
+
+    public void Pop(int randomx, int randomy)
+    {
+        if (pool.Count <= 0)
+        {
+            AddPool(initSize / 3);
+        }
         GameObject popobj= pool.Dequeue();
+        popobj.transform.position = new Vector3(Random.Range(0, randomx), Random.Range(1, randomy), 0);
         popobj.SetActive(true);
 
     }

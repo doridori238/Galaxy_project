@@ -134,7 +134,7 @@ public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
         PlayerMove();
         AttackZoneRange();
 
-       // CoolTimesSkills();
+      
 
     }
 
@@ -183,8 +183,8 @@ public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
         else if (collision.gameObject.GetComponents<Enemy>() != null && PointerEnterValue != null)
         {
             targetenemy = collision.gameObject.GetComponents<Enemy>();
-             Attackdetail(targetenemy);
-
+            Attackdetail(targetenemy);
+            attckzonecollider.gameObject.SetActive(false);
             targetenemy = null;
         }
 
@@ -210,26 +210,8 @@ public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
 
     }
 
-    //bool cool;
-    //public bool Cool
-    //{
-    //    get { return cool; }
-    //    set { cool = value; }
-    //}
 
-
-    //void CoolTimesSkills()
-    //{
-
-    //    if (skillUI[0].GetComponent<SkillState>().Cool == false)
-          
-    //    else if (skillUI[1].GetComponent<SkillState>().Cool == false)
-           
-    //    else if (skillUI[1].GetComponent<SkillState>().Cool == false)
-         
-
-    //}
-
+    public GameObject attckzonecollider;
 
     void Attackdetail(Enemy[] targas)
     {
@@ -239,6 +221,7 @@ public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
             {
                 targa.EnemyHP -= Crt;
                 
+                                                
                 Debug.Log("기본공격 성공");
             }
         else if (PointerEnterValue == skillUI[1].name && skillUI[1].GetComponent<SkillState>().Cool == true)
@@ -327,22 +310,3 @@ public enum SKILL
 
 
 
-//enemyhit = Physics2D.Raycast(playerRd.velocity,new Vector2(playerRd.position.x,playerRd.position.y),5,1<<8);
-//if (enemyhit.rigidbody != null)
-//{
-//    targetenemy = enemyhit.rigidbody.GetComponent<Enemy>();
-//    Attack(targetenemy);
-//}
-//else
-//    return;
-
-//if (playersprite.flipX == true)
-//{
-//    attackZone.offset = new Vector2(-3, 0);
-//    attackZone.size = new Vector2(4, 0);
-//}
-//else
-//{ 
-//    attackZone.offset = new Vector2(3, 0);
-//    attackZone.size = new Vector2(4, 0);
-//}

@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour
     GameObject partiecle;
     [SerializeField] float atk = 5;
 
+
     public float Atk
     {
         get { return atk; }
@@ -66,10 +67,10 @@ public class Enemy : MonoBehaviour
 
         floorhit2D = Physics2D.Raycast(frontVec, Vector2.down, 2, 1 << 6);
         if (floorhit2D.collider == null)
-        { 
-             Turn();
+        {
+            Turn();
         }
-
+        
 
         playerhit2D = Physics2D.OverlapCircle(rigdbody.position, 2.5f, 1 << 7);
         if (playerhit2D != null)
@@ -112,7 +113,16 @@ public class Enemy : MonoBehaviour
 
         yield return null;
     }
-   
+
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.GetComponent<Enemy>() != null)
+        {
+            Turn();
+        }
+        
+    }
 
     void Turn()
     {
@@ -151,7 +161,8 @@ public class Enemy : MonoBehaviour
 
     void Die()
     {
-        gameObject.SetActive(false);
+        DropItem();
+        PoolingManager.instance.ReturnPool(gameObject);
     }
 
 
@@ -159,6 +170,13 @@ public class Enemy : MonoBehaviour
     { 
         // hp를 깍아준당
     
+    }
+
+    public ItmeDropList dropItem;
+    public void DropItem()
+    {
+        GameObject dropPrafab = dropItem[Random.Range(0, dropItem.Count)];
+        Instantiate(dropPrafab, transform.position + new Vector3(0,0,1), transform.rotation);
     }
 
 }

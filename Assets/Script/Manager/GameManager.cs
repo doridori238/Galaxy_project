@@ -5,9 +5,10 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
+
     void Start()
     {
-        
+        PoolingManager.instance.Pop(30,4);
     }
 
     void Update()
