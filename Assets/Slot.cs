@@ -10,7 +10,7 @@ using UnityEngine.UI;
 using static InterfaceManager;
 using static UnityEditor.Progress;
 
-public class Slot : MonoBehaviour, IGetItemDataAble ,IPointerDownHandler,IPointerUpHandler,IPointerClickHandler
+public class Slot : MonoBehaviour, IGetItemDataAble ,IPointerClickHandler
 {
     public Image itemSprite;
     public TextMeshProUGUI itemName;
@@ -80,22 +80,13 @@ public class Slot : MonoBehaviour, IGetItemDataAble ,IPointerDownHandler,IPointe
     public void GetItemDataAble(ISendItemDataAble OnSendItemData)
     {
          Debug.Log("아이템 받음 " + OnSendItemData);
-        if (OnSendItemData.GetType() == typeof(ISendItemDataAble))
-            itemClass1 = OnSendItemData.GetItemClass();
-        else
-            return;
-
+         itemClass1 = OnSendItemData.GetItemClass();
          slotitem = itemClass1.ItemClassName.CurrentItem;
          SetSlot(slotitem);
 
     }
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        Debug.Log(gameObject.name + "다운");
-       
-    }
-
+   
     public void OnPointerClick(PointerEventData eventData)
     {
         Debug.Log(gameObject.name + "클릭");
@@ -109,11 +100,6 @@ public class Slot : MonoBehaviour, IGetItemDataAble ,IPointerDownHandler,IPointe
     }
 
 
-    public void OnPointerUp(PointerEventData eventData)
-    {
-
-        Debug.Log(gameObject.name + "업");
-    }
-
+  
 }
 

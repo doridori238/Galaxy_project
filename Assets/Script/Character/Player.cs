@@ -18,6 +18,9 @@ public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
     float maxspeed = 3f;
     Vector2 hMoveVelocity;
 
+    public Animator playerAnimator;
+
+
     SKILL skills;
 
     public SKILL SKILLS
@@ -62,7 +65,10 @@ public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
     {
         get { return hp; }
         set { hp = value;
-           // Debug.Log(Hp);
+            // Debug.Log(Hp);
+           
+                
+            
         }
     }
 
@@ -115,7 +121,12 @@ public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
         
         });
         attackZone = attackZone.GetComponent<BoxCollider2D>();
-      
+        playerAnimator= GetComponent<Animator>();
+       
+        particleBasictemp = Instantiate(particleBasicAttack, attackZone.transform);
+        particleRittletemp = Instantiate(particleLittleAttack, attackZone.transform); 
+        particlleBigtemp = Instantiate(particleBigAttack, attackZone.transform);
+
     }
 
 
@@ -133,8 +144,6 @@ public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
         playerRd.AddForce(Vector2.right * hjoy, ForceMode2D.Impulse);
         PlayerMove();
         AttackZoneRange();
-
-      
 
     }
 
@@ -183,6 +192,7 @@ public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
         else if (collision.gameObject.GetComponents<Enemy>() != null && PointerEnterValue != null)
         {
             targetenemy = collision.gameObject.GetComponents<Enemy>();
+            playerAnimator.SetTrigger("Attackani");
             Attackdetail(targetenemy);
             attckzonecollider.gameObject.SetActive(false);
             targetenemy = null;
@@ -212,38 +222,45 @@ public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
 
 
     public GameObject attckzonecollider;
-
+    public GameObject particleBasicAttack;
+    GameObject particleBasictemp;
+    public GameObject particleLittleAttack;
+    GameObject particleRittletemp;
+    public GameObject particleBigAttack;
+    GameObject particlleBigtemp;
     void Attackdetail(Enemy[] targas)
     {
         Debug.Log("젤리 공격!!!!!!");
         if (PointerEnterValue == skillUI[0].name && skillUI[0].GetComponent<SkillState>().Cool == true)
             foreach (Enemy targa in targas)
             {
+                particleBasictemp.SetActive(true);
                 targa.EnemyHP -= Crt;
-                
-                                                
+
                 Debug.Log("기본공격 성공");
             }
         else if (PointerEnterValue == skillUI[1].name && skillUI[1].GetComponent<SkillState>().Cool == true)
             foreach (Enemy targa in targas)
             {
+                particleRittletemp.SetActive(true);
                 targa.EnemyHP -= Crt * 1.5f;
-                
                 Debug.Log("작은공격 성공");
             }
         else if (PointerEnterValue == skillUI[2].name && skillUI[2].GetComponent<SkillState>().Cool == true)
             foreach (Enemy targa in targas)
             {
+                particlleBigtemp.SetActive(true);
                 targa.EnemyHP -= Crt * 0.7f;
-               
                 Debug.Log("큰공격 성공");
             }
 
     }
 
 
-    public GameObject componentAttackZone;
+    //public GameObject componentAttackZone;
     public  BoxCollider2D attackZone;
+    public GameObject playerattacksword;
+    public GameObject playerBasicsword;
   
 
     public float basicAttackZone = 3;
@@ -256,32 +273,45 @@ public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
             case SKILL.BASIC_ATTACK:
                 attackZone.size = new Vector2(4, 2);
                 if (PlayerForwardSprite == true)
+                {
                     attackZone.offset = new Vector2(basicAttackZone, 0);
+                    playerattacksword.GetComponent<SpriteRenderer>().flipX = true;
+                    playerBasicsword.GetComponent<SpriteRenderer>().flipX = true;
+                }
                 else
+                { 
                     attackZone.offset = new Vector2(basicAttackZone * -1, 0);
-
+                    playerattacksword.GetComponent<SpriteRenderer>().flipX = false;
+                    playerBasicsword.GetComponent<SpriteRenderer>().flipX = false;
+                }
                 break;
 
             case SKILL.LITTLE_ATTACK:
                 attackZone.size = new Vector2(2, 2);
                 if (PlayerForwardSprite == true)
+                {
                     attackZone.offset = new Vector2(littleAttackZone, 0);
+                    playerattacksword.GetComponent<SpriteRenderer>().flipX = true;
+                    playerBasicsword.GetComponent<SpriteRenderer>().flipX = true;
+                }
                 else
+                { 
                     attackZone.offset = new Vector2(littleAttackZone * -1, 0);
+                    playerattacksword.GetComponent<SpriteRenderer>().flipX = false;
+                    playerBasicsword.GetComponent<SpriteRenderer>().flipX = false;
+                }
 
                
                 break;
             case SKILL.BIG_ATTACK:
                 attackZone.size = new Vector2(11, 2);
                 attackZone.offset = new Vector2(0, 0);
-               
+                playerattacksword.SetActive(false);
+                playerBasicsword.SetActive(false);
 
                 break;
 
         }
-
-
-
 
     }
 
@@ -296,9 +326,9 @@ public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
     }
 
 
-    void Hit()
+    public void Hit()
     {
-        // 애니메이션
+        playerAnimator.SetTrigger("Hitani");
     }
 
 }

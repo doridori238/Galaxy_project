@@ -7,8 +7,6 @@ public class InvenUi : Singleton<InvenUi>, IGetItemDataAble
 {
     public Slot[] slots;
     ISendItemDataAble sendItemDataAble;
-    
-   
 
     public void AddItem(ISendItemDataAble OnSendItemData)
     {

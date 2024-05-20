@@ -4,7 +4,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class ItmeDropList : ScriptableObject
+public class ItemDropList : ScriptableObject
 {    
     public List<GameObject> itemList;
 

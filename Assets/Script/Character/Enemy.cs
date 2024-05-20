@@ -20,11 +20,18 @@ public class Enemy : MonoBehaviour
     [SerializeField] float atk = 5;
 
 
+    public GameObject enemyattackzone;
+    public BoxCollider2D boxCollider2D;
+    public float collideroffsetsettingX;
+    public float collideroffsetsettingY;
+
+    GameObject dieParticle;
+
     public float Atk
     {
         get { return atk; }
         set { atk = value * LV; }
-    
+
     }
 
     [SerializeField] int lv = 1;
@@ -41,10 +48,22 @@ public class Enemy : MonoBehaviour
         set {
             enemyHp = value;
             Debug.Log(EnemyHP + "젤리 목숨");
+            Hit();
             if (EnemyHP < 1)
                 Die();
+
         }
-   
+
+    }
+
+    public bool EnemyForward
+    {
+        get { return spriteRenderer.flipX; }
+        set { spriteRenderer.flipX = value; 
+        
+        
+        
+        }
     }
 
     void Start()
@@ -55,13 +74,17 @@ public class Enemy : MonoBehaviour
         Monstercoll = GetComponent<Collider2D>();
         StartCoroutine(EnemyMove());
         partiecle = Instantiate(attackparti, Enemytran.transform);
+        hitParticle = Instantiate(enemyHitparticle, Enemytran.transform);
+        dieParticle = Instantiate(die, Enemytran.transform);
+
     }
+
 
     private void FixedUpdate()
     {
         rigdbody.velocity = new Vector2(nextspeed, 0);
 
-        frontVec = new Vector2(rigdbody.position.x + nextspeed,rigdbody.position.y);
+        frontVec = new Vector2(rigdbody.position.x + nextspeed, rigdbody.position.y);
 
         Debug.DrawRay(frontVec, Vector3.down, new Color(2, 0, 0));
 
@@ -70,36 +93,30 @@ public class Enemy : MonoBehaviour
         {
             Turn();
         }
-        
 
-        playerhit2D = Physics2D.OverlapCircle(rigdbody.position, 2.5f, 1 << 7);
+
+        playerhit2D = Physics2D.OverlapCircle(rigdbody.position, 1.5f, 1 << 7);
         if (playerhit2D != null)
         {
-            if (playerhit2D.Distance(Monstercoll).distance < 1.5)
+            if (playerhit2D.Distance(Monstercoll).distance < 0.5f)
             {
                 StopCoroutine(EnemyMove());
                 nextspeed = 0;
                 frontVec = new Vector2(rigdbody.position.x + nextspeed, 0);
-                Player targetHp = Player.instance;
-
-                //Debug.Log(targetHp.Hp);
-
-                
-                Attack(targetHp);
+                enemyattackzone.gameObject.SetActive(true);
+                //Attack(Player.instance);
 
             }
-
         }
-
+      
     }
 
-
-    IEnumerator EnemyMove()
+        IEnumerator EnemyMove()
     {
         Debug.Log("들어왔다!");
         animator.SetBool("isWalk", true);
 
-        nextspeed = Random.Range(-1, 2);
+        nextspeed = Random.Range(-2, 2);
 
         if (nextspeed == 0)
         {
@@ -107,11 +124,28 @@ public class Enemy : MonoBehaviour
 
         }
         else if (nextspeed < 0)
-        { spriteRenderer.flipX = true; }
+        {
+            spriteRenderer.flipX = true;
+          
+        }
         else if (nextspeed > 0)
-        { spriteRenderer.flipX = false; }
+        {
+            spriteRenderer.flipX = false;
+           
+        }
 
         yield return null;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.GetComponent<Player>() != null)
+        {
+
+            Attack(Player.instance);
+
+        }
+
     }
 
 
@@ -128,22 +162,25 @@ public class Enemy : MonoBehaviour
     {
         nextspeed *= -1;
         spriteRenderer.flipX = !spriteRenderer.flipX;
+       
     }
 
 
     void Attack(Player targetHp)
     {
-        //Debug.Log(targetHp.Hp + "Hp");
+        
         animator.SetBool("isWalk", false);
-        //rigdbody.velocity = new Vector2(rigdbody.position.x, 0);
+       
         animator.SetTrigger("doTouch");
-        //targetHp.Hp -= Atk;
+        targetHp.Hit();
+        enemyattackzone.SetActive(false);
 
     }
 
 
     void StartAttackPaticleEvnt()
     {
+
         Debug.Log("꽁~격!!!");
         partiecle.SetActive(true);
         Player.instance.Hp -= Atk;
@@ -159,20 +196,23 @@ public class Enemy : MonoBehaviour
         Turn();
     }
 
+    public GameObject die;
     void Die()
     {
+        die.SetActive(true);
         DropItem();
         PoolingManager.instance.ReturnPool(gameObject);
     }
 
+    public GameObject enemyHitparticle;
+    GameObject hitParticle;
 
     void Hit()
-    { 
-        // hp를 깍아준당
-    
+    {
+        hitParticle.SetActive(true);
     }
 
-    public ItmeDropList dropItem;
+    public ItemDropList dropItem;
     public void DropItem()
     {
         GameObject dropPrafab = dropItem[Random.Range(0, dropItem.Count)];

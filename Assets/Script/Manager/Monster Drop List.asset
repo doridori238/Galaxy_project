@@ -12,4 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c157b8dbe8a7614498186a211f05a909, type: 3}
   m_Name: Monster Drop List
   m_EditorClassIdentifier: 
-  itemList: []
+  itemList:
+  - {fileID: 5818417276067985760, guid: 106c2f18db23eb0419607db929fc0988, type: 3}
+  - {fileID: 1294055083040584485, guid: 839d2fde721c70844844f55cc9048b9d, type: 3}
+  - {fileID: 2758816275714080096, guid: f1955faee292b0447a3e554584b838c2, type: 3}
+  - {fileID: 7387347091902577057, guid: fa27c0ee72fa5c24aab2a3955e3fb733, type: 3}
+  - {fileID: 6526420514819347653, guid: af0f97a684dc89749b0a16a44f576801, type: 3}
+  - {fileID: 536015282993779924, guid: 66a432e080b878d4c9b3c97dd8af9806, type: 3}
