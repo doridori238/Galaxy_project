@@ -20,6 +20,7 @@ public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
 
     public Animator playerAnimator;
 
+    public Image hpImage;
 
     SKILL skills;
 
@@ -126,7 +127,9 @@ public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
         particleBasictemp = Instantiate(particleBasicAttack, attackZone.transform);
         particleRittletemp = Instantiate(particleLittleAttack, attackZone.transform); 
         particlleBigtemp = Instantiate(particleBigAttack, attackZone.transform);
-
+       
+        playerattacksword.SetActive(false);
+        playerBasicsword.SetActive(true);
     }
 
 
@@ -195,6 +198,8 @@ public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
             playerAnimator.SetTrigger("Attackani");
             Attackdetail(targetenemy);
             attckzonecollider.gameObject.SetActive(false);
+            playerattacksword.SetActive(true);
+            playerBasicsword.SetActive(false);
             targetenemy = null;
         }
 
@@ -217,7 +222,7 @@ public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
     public void GetItemDataAble(ISendItemDataAble OnSendItemData)
     {
         Debug.Log(OnSendItemData);
-
+        
     }
 
 
@@ -236,7 +241,8 @@ public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
             {
                 particleBasictemp.SetActive(true);
                 targa.EnemyHP -= Crt;
-
+                playerattacksword.SetActive(false);
+                playerBasicsword.SetActive(true);
                 Debug.Log("기본공격 성공");
             }
         else if (PointerEnterValue == skillUI[1].name && skillUI[1].GetComponent<SkillState>().Cool == true)
@@ -244,6 +250,8 @@ public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
             {
                 particleRittletemp.SetActive(true);
                 targa.EnemyHP -= Crt * 1.5f;
+                playerattacksword.SetActive(false);
+                playerBasicsword.SetActive(true);
                 Debug.Log("작은공격 성공");
             }
         else if (PointerEnterValue == skillUI[2].name && skillUI[2].GetComponent<SkillState>().Cool == true)
@@ -251,6 +259,8 @@ public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
             {
                 particlleBigtemp.SetActive(true);
                 targa.EnemyHP -= Crt * 0.7f;
+                playerattacksword.SetActive(false);
+                playerBasicsword.SetActive(true);
                 Debug.Log("큰공격 성공");
             }
 
@@ -320,8 +330,12 @@ public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
         throw new NotImplementedException();
     }
 
+    public GameObject dieparticle;
+    GameObject diepaticletemp;
     void Die()
     {
+        diepaticletemp = Instantiate(dieparticle);
+        diepaticletemp.SetActive(true);
         //애니메이션
     }
 

@@ -59,9 +59,24 @@ public class Slot : MonoBehaviour, IGetItemDataAble ,IPointerClickHandler
         if (itemClass1 == null)
             return;
         else if (itemClass1 != null)
-        { 
-          itemClass1.ItemUse(player);
-          ReMove();
+        {
+            if (slotitem.lvlimit == LV_LIMIT.ONE_LV)
+            {
+                itemClass1.ItemUse(player);
+                ReMove();
+            }
+            else if (slotitem.lvlimit == LV_LIMIT.FIVE_LV && Player.instance.PlayerLV == 5)
+            {
+                itemClass1.ItemUse(player);
+                ReMove();
+            }
+            else if (slotitem.lvlimit == LV_LIMIT.TEN_LV && Player.instance.PlayerLV == 10)
+            {
+                itemClass1.ItemUse(player);
+                ReMove();
+            }
+            else
+                return;
         }
 
         Debug.Log("Use");

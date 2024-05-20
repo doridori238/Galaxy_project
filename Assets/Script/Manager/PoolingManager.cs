@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.Pool;
 using static UnityEditor.PlayerSettings;
@@ -15,10 +16,9 @@ public class PoolingManager : MonoBehaviour
             instance = this;
         else
             Destroy(gameObject);
-
     }
 
-    public GameObject targetPrafab;
+    public GameObject[] targetPrafab;
     public int initSize;
     public Queue<GameObject> pool = new Queue<GameObject>();
 
@@ -35,10 +35,10 @@ public class PoolingManager : MonoBehaviour
     {
         for (int i = 0; i < size; i++)
         {
-            GameObject copyObject = null;
-            copyObject = Instantiate(targetPrafab);
-            copyObject.SetActive(false);
-            pool.Enqueue(copyObject);
+            GameObject[] copyObject = null;
+            copyObject[i] = Instantiate(targetPrafab[i]);
+            copyObject[i].SetActive(false);
+            pool.Enqueue(copyObject[i]);
         }
     }
 
