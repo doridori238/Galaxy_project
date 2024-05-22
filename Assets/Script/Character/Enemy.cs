@@ -49,6 +49,7 @@ public class Enemy : MonoBehaviour
             enemyHp = value;
             Debug.Log(EnemyHP + "젤리 목숨");
             Hit();
+
             if (EnemyHP < 1)
                 Die();
 
@@ -196,9 +197,11 @@ public class Enemy : MonoBehaviour
         Turn();
     }
 
+
     public GameObject die;
     void Die()
     {
+        GameManager.instance.EnemyCount += 1;
         die.SetActive(true);
         DropItem();
         PoolingManager.instance.ReturnPool(gameObject);
@@ -216,7 +219,7 @@ public class Enemy : MonoBehaviour
     public void DropItem()
     {
         GameObject dropPrafab = dropItem[Random.Range(0, dropItem.Count)];
-        Instantiate(dropPrafab, transform.position + new Vector3(0,0,1), transform.rotation);
+        Instantiate(dropPrafab, transform.position + new Vector3(0,0.5f,1), transform.rotation);
     }
 
 }

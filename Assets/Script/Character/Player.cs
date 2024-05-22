@@ -22,6 +22,7 @@ public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
 
     public Image hpImage;
 
+
     SKILL skills;
 
     public SKILL SKILLS
@@ -61,15 +62,17 @@ public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
 
 
     [SerializeField] float hp;
-    
+    float maxhp = 300;
     public float Hp
     {
         get { return hp; }
         set { hp = value;
-            // Debug.Log(Hp);
-           
+
+            if (Hp <= 0)
+            {
+                Die();
+            }
                 
-            
         }
     }
 
@@ -81,9 +84,29 @@ public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
         get { return mp; }
         set { mp = value;
             if (Mp >= maxMp)
-                PlayerLV += 1;
+            {
+                 PlayerLV += 1;
+                 
+            }
         }
     }
+
+
+    float exp = 0;
+    float maxexp = 100;
+    public float EXP
+    {
+        get { return exp; }
+        set { exp = value;
+            if (EXP >= maxexp)
+            {
+                PlayerLV += 1;
+                EXP = exp;
+            }
+
+        }
+    }
+
 
     /// <summary>
     /// 치명타 확률
@@ -124,9 +147,9 @@ public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
         attackZone = attackZone.GetComponent<BoxCollider2D>();
         playerAnimator= GetComponent<Animator>();
        
-        particleBasictemp = Instantiate(particleBasicAttack, attackZone.transform);
-        particleRittletemp = Instantiate(particleLittleAttack, attackZone.transform); 
-        particlleBigtemp = Instantiate(particleBigAttack, attackZone.transform);
+        //particleBasictemp = Instantiate(particleBasicAttack, attackZone.transform);
+        //particleRittletemp = Instantiate(particleLittleAttack, attackZone.transform); 
+        //particlleBigtemp = Instantiate(particleBigAttack, attackZone.transform);
        
         playerattacksword.SetActive(false);
         playerBasicsword.SetActive(true);
@@ -147,6 +170,10 @@ public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
         playerRd.AddForce(Vector2.right * hjoy, ForceMode2D.Impulse);
         PlayerMove();
         AttackZoneRange();
+
+        hpImage.fillAmount =  Hp/maxhp;
+
+
 
     }
 
@@ -236,33 +263,45 @@ public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
     void Attackdetail(Enemy[] targas)
     {
         Debug.Log("젤리 공격!!!!!!");
+        
         if (PointerEnterValue == skillUI[0].name && skillUI[0].GetComponent<SkillState>().Cool == true)
+        {
             foreach (Enemy targa in targas)
             {
+                particleBasictemp = Instantiate(particleBasicAttack, targa.transform);
                 particleBasictemp.SetActive(true);
                 targa.EnemyHP -= Crt;
                 playerattacksword.SetActive(false);
                 playerBasicsword.SetActive(true);
                 Debug.Log("기본공격 성공");
             }
+        }
         else if (PointerEnterValue == skillUI[1].name && skillUI[1].GetComponent<SkillState>().Cool == true)
+        {
             foreach (Enemy targa in targas)
             {
+                particleRittletemp = Instantiate(particleLittleAttack, targa.transform);
                 particleRittletemp.SetActive(true);
                 targa.EnemyHP -= Crt * 1.5f;
                 playerattacksword.SetActive(false);
                 playerBasicsword.SetActive(true);
                 Debug.Log("작은공격 성공");
             }
+
+        }
         else if (PointerEnterValue == skillUI[2].name && skillUI[2].GetComponent<SkillState>().Cool == true)
+        { 
             foreach (Enemy targa in targas)
             {
+                particlleBigtemp = Instantiate(particleBigAttack, targa.transform);
                 particlleBigtemp.SetActive(true);
                 targa.EnemyHP -= Crt * 0.7f;
                 playerattacksword.SetActive(false);
                 playerBasicsword.SetActive(true);
                 Debug.Log("큰공격 성공");
             }
+        
+        }
 
     }
 
@@ -332,7 +371,7 @@ public class Player : Singleton<Player>, ISendItemDataAble, IGetItemDataAble
 
     public GameObject dieparticle;
     GameObject diepaticletemp;
-    void Die()
+   public  void Die()
     {
         diepaticletemp = Instantiate(dieparticle);
         diepaticletemp.SetActive(true);

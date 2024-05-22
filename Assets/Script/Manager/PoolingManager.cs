@@ -35,10 +35,11 @@ public class PoolingManager : MonoBehaviour
     {
         for (int i = 0; i < size; i++)
         {
-            GameObject[] copyObject = null;
-            copyObject[i] = Instantiate(targetPrafab[i]);
-            copyObject[i].SetActive(false);
-            pool.Enqueue(copyObject[i]);
+            GameObject copyObject = null;
+            // copyObject[i] = Instantiate(targetPrafab[Random.Range(0, targetPrafab.Length)]);
+            copyObject = Instantiate(targetPrafab[Random.Range(0, targetPrafab.Length)]);
+            copyObject.SetActive(false);
+            pool.Enqueue(copyObject);
         }
     }
 
@@ -48,11 +49,14 @@ public class PoolingManager : MonoBehaviour
     {
         if (pool.Count <= 0)
         {
-            AddPool(initSize / 3);
+            AddPool(initSize);
         }
-        GameObject popobj= pool.Dequeue();
-        popobj.transform.position = new Vector3(Random.Range(0, randomx), Random.Range(1, randomy), 0);
-        popobj.SetActive(true);
+        for (int i = 0; i < initSize ; i++)
+        { 
+            GameObject popobj= pool.Dequeue();
+            popobj.transform.position = new Vector3(Random.Range(10, randomx), Random.Range(1, randomy), 0);
+            popobj.SetActive(true);
+        }
 
     }
 

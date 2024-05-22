@@ -8,8 +8,8 @@ using static UnityEngine.GraphicsBuffer;
 public class SkillState : MonoBehaviour, IPointerDownHandler
 {
     public SKILL getskills;
-    public Image skillImgae;
-    public float cooltime = 3;
+   Image skillImgae;
+    public float cooltime = 0;
     public float maxCooltime = 3;
     public GameObject attackZone;
     public GameObject skillLockImage;
@@ -58,13 +58,14 @@ public class SkillState : MonoBehaviour, IPointerDownHandler
 
     public void CoolTime()
     {
-        cooltime -= Time.smoothDeltaTime;
+        skillImgae.fillAmount = 0;
+        cooltime += Time.smoothDeltaTime;
         skillImgae.fillAmount = cooltime / maxCooltime;
-        if (skillImgae.fillAmount == 0)
+        if (skillImgae.fillAmount == 1)
         {
             Cool = false;
             skillImgae.fillAmount = 1;
-            cooltime = 3;
+            cooltime = 0;
         }
         
     }

@@ -12,7 +12,7 @@ public class ButtonUi : MonoBehaviour
     [SerializeField] private GameObject allbuttonImage;
     [SerializeField] private List<Button> gameSceneAllButton = new List<Button>();
     [SerializeField] private List<GameObject> gameconnectedButton = new List<GameObject>();
-   
+     
 
     private bool buttonOnOff = false;
     public bool ButtonOnOff
@@ -29,7 +29,7 @@ public class ButtonUi : MonoBehaviour
     void Start()
     {
         MenuButton();
-      
+        
     }
 
     /// <summary>
