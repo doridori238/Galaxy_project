@@ -21,6 +21,12 @@ public class UiManager : MonoBehaviour
     }
 
 
+    public void SceneChange()
+    {
+        SceneManager.LoadScene("GameScene");
+        
+    }
+
     public void QuitGame()
     {
         Application.Quit();

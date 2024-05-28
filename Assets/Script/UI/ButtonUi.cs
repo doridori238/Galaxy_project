@@ -40,8 +40,7 @@ public class ButtonUi : MonoBehaviour
         menuButton.onClick.AddListener(() => { MenuOnClick(menuButton, allbuttonImage, gameconnectedButton); }); // 선언을 통해 역어주고 event이기에 따로 업데이트 구문에서 진행하지 않아도 된다.
         gameSceneAllButton[0].onClick.AddListener(() => { UiOff(gameconnectedButton); gameconnectedButton[0].SetActive(true);});
         gameSceneAllButton[1].onClick.AddListener(() => { UiOff(gameconnectedButton); gameconnectedButton[1].SetActive(true); });
-        gameSceneAllButton[2].onClick.AddListener(() => { UiOff(gameconnectedButton); gameconnectedButton[2].SetActive(true); });
-        gameSceneAllButton[3].onClick.AddListener(() => { UiOff(gameconnectedButton); gameconnectedButton[3].SetActive(true); });
+      
     }
 
     // 버튼을 누르면 [메서드 : 버튼은 비활성화 되고] -> 버튼과 연결된 Ui가 활성화 되도록 하는 메서드 구현  

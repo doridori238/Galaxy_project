@@ -106,7 +106,7 @@ public class Slot : MonoBehaviour, IGetItemDataAble ,IPointerClickHandler
     {
         Debug.Log(gameObject.name + "클릭");
         detailUi.SetActive(true);
-        detaildata.text = slotitem.itemname + slotitem.lvlimit + slotitem.value1 ;
+        detaildata.text = "아이템 :" + slotitem.itemname + "레벨 :" + slotitem.lvlimit + "사용 : " + slotitem.value1 ;
         detalItemImage.sprite = slotitem.sprite;
         detailUibuttons[0].onClick.AddListener(() => { Use(); });
         detailUibuttons[1].onClick.AddListener(() => { ReMove(); });

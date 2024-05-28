@@ -1,0 +1,4 @@
+repository "speed_project@dkffps238@cloud"
+  path "/"
+    br "/main"
+    co "/main"
