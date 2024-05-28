@@ -19,7 +19,7 @@ public class GameManager : Singleton<GameManager>
         get { return enemyCount; }
         set { enemyCount = value;
             Player.instance.EXP += 10;
-        
+
         }
     }
 

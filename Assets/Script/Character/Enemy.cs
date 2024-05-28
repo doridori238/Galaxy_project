@@ -182,19 +182,32 @@ public class Enemy : MonoBehaviour
     void StartAttackPaticleEvnt()
     {
 
+        if (partiecle == null)
+            return;
+
+        else
+        { 
         Debug.Log("꽁~격!!!");
-        partiecle.SetActive(true);
+        partiecle.gameObject.SetActive(true);
         Player.instance.Hp -= Atk;
+        
+        }
 
     }
 
 
     void EndAttackPaticleEvnt()
     {
-        Debug.Log("꽁~격 끝!!!");
-        partiecle.SetActive(false);
-        StartCoroutine(EnemyMove());
-        Turn();
+        if (partiecle == null)
+            return;
+        else
+        { 
+             Debug.Log("꽁~격 끝!!!");
+             partiecle.gameObject.SetActive(false);
+             StartCoroutine(EnemyMove());
+             Turn();
+        
+        }
     }
 
 
